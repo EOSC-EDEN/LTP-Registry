@@ -13,6 +13,8 @@ Install requirements (LinkML):
 
 ### Data Model Representations
 
-* graphviz jpg: `gen-graphviz registry-schema.yaml -f jpg -o registry-schema`
 
-![registry-schema.jpg]()
+* Entity-Relationship (ER) Diagram `gen-erdiagram --format mermaid  registry-schema.yaml -c DataService`
+Copy output to https://mermaid.live 
+
+![registry-schema.jpgg mermaid schema representation ](registry-schema.png)
