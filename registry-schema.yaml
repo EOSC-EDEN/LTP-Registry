@@ -1,0 +1,595 @@
+id: https://eden-fidelis.eu/example/registry
+name: repository-services-registry-schema
+description: proof-of-concept schema for describing the entities of EOSC-EDEN Repository Services Registry
+license: CC-BY 4.0
+prefixes:
+  linkml: https://w3id.org/linkml/
+  registry: https://eden-fidelis.eu/example/registry
+  dcat:  http://www.w3.org/ns/dcat#
+  dcterms: http://purl.org/dc/terms/
+  dqv: http://www.w3.org/ns/dqv#
+  foaf: http://xmlns.com/foaf/0.1/
+  prov: http://www.w3.org/ns/prov#
+  # ORCID: https://orcid.org/
+  # schema: http://schema.org/    
+default_curi_maps:
+  - semweb_context  
+imports:
+  - linkml:types
+default_range: string
+default_prefix: registry
+slots:
+  access_URL:
+    name: access_URL
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:accessURL
+  access_rights:
+    name: access_rights
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:accessRights
+  access_service:
+    name: access_service
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:accessService
+  algorithm:
+    name: algorithm
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: spdx:algorithm
+  applicable_legislation:
+    name: applicable_legislation
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcatap:applicableLegislation
+  application_profile:
+    name: application_profile
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:conformsTo
+  availability:
+    name: availability
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcatap:availability
+  bbox:
+    name: bbox
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:bbox
+  beginning:
+    name: beginning
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: time:hasBeginning
+  byte_size:
+    name: byte_size
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:byteSize
+  catalogue:
+    name: catalogue
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:catalog
+  centroid:
+    name: centroid
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:centroid
+  change_type:
+    name: change_type
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: adms:status
+  checksum:
+    name: checksum
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: spdx:checksum
+  checksum_value:
+    name: checksum_value
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: spdx:checksumValue
+  compression_format:
+    name: compression_format
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:compressFormat
+  conforms_to:
+    name: conforms_to
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:conformsTo
+  contact_point:
+    name: contact_point
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:contactPoint
+  creator:
+    name: creator
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:creator
+  dataset_distribution:
+    name: dataset_distribution
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:distribution
+  description:
+    name: description
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:description
+  documentation:
+    name: documentation
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: foaf:page
+  download_URL:
+    name: download_URL
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:downloadURL
+  end:
+    name: end
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: time:hasEnd
+  end_date:
+    name: end_date
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:endDate
+  endpoint_URL:
+    name: endpoint_URL
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:endpointURL
+  endpoint_description:
+    name: endpoint_description
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:endpointDescription
+  format:
+    name: format
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:format
+  frequency:
+    name: frequency
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:accrualPeriodicity
+  geographical_coverage:
+    name: geographical_coverage
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:spatial
+  geometry:
+    name: geometry
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: locn:geometry
+  had_role:
+    name: had_role
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:hadRole
+  has_dataset:
+    name: has_dataset
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:dataset
+  has_part:
+    name: has_part
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:hasPart
+  has_policy:
+    name: has_policy
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: odrl:hasPolicy
+  has_version:
+    name: has_version
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:hasVersion
+  homepage:
+    name: homepage
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: foaf:homepage
+  identifier:
+    name: identifier
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:identifier
+  in_series:
+    name: in_series
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:inSeries
+  is_referenced_by:
+    name: is_referenced_by
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:isReferencedBy
+  keyword:
+    name: keyword
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:keyword
+  landing_page:
+    name: landing_page
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:landingPage
+  language:
+    name: language
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:language
+  licence:
+    name: licence
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:license
+  linked_schemas:
+    name: linked_schemas
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:conformsTo
+  listing_date:
+    name: listing_date
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:issued
+  media_type:
+    name: media_type
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:mediaType
+  modification_date:
+    name: modification_date
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:modified
+  name:
+    name: name
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: foaf:name
+  notation:
+    name: notation
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: skos:notation
+  other_identifier:
+    name: other_identifier
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: adms:identifier
+  packaging_format:
+    name: packaging_format
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:packageFormat
+  preferred_label:
+    name: preferred_label
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: skos:prefLabel
+  primary_topic:
+    name: primary_topic
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: foaf:primaryTopic
+  provenance:
+    name: provenance
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:provenance
+  publisher:
+    name: publisher
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:publisher
+  qualified_attribution:
+    name: qualified_attribution
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: prov:qualifiedAttribution
+  qualified_relation:
+    name: qualified_relation
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:qualifiedRelation
+  record:
+    name: record
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:record
+  related_resource:
+    name: related_resource
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:relation
+  relation:
+    name: relation
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:relation
+  release_date:
+    name: release_date
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:issued
+  rights:
+    name: rights
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:rights
+  sample:
+    name: sample
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: adms:sample
+  serves_dataset:
+    name: serves_dataset
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:servesDataset
+  service:
+    name: service
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:service
+  source:
+    name: source
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:source
+  source_metadata:
+    name: source_metadata
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:source
+  spatial_resolution:
+    name: spatial_resolution
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:spatialResolutionInMeters
+  start_date:
+    name: start_date
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:startDate
+  status:
+    name: status
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: adms:status
+  temporal_coverage:
+    name: temporal_coverage
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:temporal
+  temporal_resolution:
+    name: temporal_resolution
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:temporalResolution
+  theme:
+    name: theme
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:theme
+  themes:
+    name: themes
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:themeTaxonomy
+  title:
+    name: title
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:title
+  type:
+    name: type
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcterms:type
+  version:
+    name: version
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: dcat:version
+  version_notes:
+    name: version_notes
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: adms:versionNotes
+  was_generated_by:
+    name: was_generated_by
+    description: This slot is described in more detail within the class in which it
+      is used.
+    slot_uri: prov:wasGeneratedBy
+classes:
+  DataService:
+    name: DataService
+    description: See [DCAT-AP specs:DataService](https://semiceu.github.io/DCAT-AP/releases/3.0.0/#DataService)
+    slots:
+    - access_rights
+    # - applicable_legislation
+    # - conforms_to
+    # - contact_point
+    # - description
+    # - documentation
+    # - endpoint_URL
+    # - endpoint_description
+    # - format
+    # - keyword
+    # - landing_page
+    # - licence
+    # - publisher
+    # - serves_dataset
+    # - theme
+    # - title
+    slot_usage:
+      access_rights:
+        name: access_rights
+        description: Information regarding access or restrictions based on privacy,
+          security, or other policies.
+        slot_uri: dcterms:accessRights
+        range: RightsStatement
+        required: false
+        multivalued: false
+        inlined_as_list: true
+    #   applicable_legislation:
+    #     name: applicable_legislation
+    #     description: The legislation that mandates the creation or management of the
+    #       Data Service.
+    #     slot_uri: dcatap:applicableLegislation
+    #     range: LegalResource
+    #     required: false
+    #     multivalued: true
+    #     inlined_as_list: true
+    #   conforms_to:
+    #     name: conforms_to
+    #     description: An established (technical) standard to which the Data Service
+    #       conforms.
+    #     slot_uri: dcterms:conformsTo
+    #     range: Standard
+    #     required: false
+    #     recommended: true
+    #     multivalued: true
+    #     inlined_as_list: true
+    #   contact_point:
+    #     name: contact_point
+    #     description: Contact information that can be used for sending comments about
+    #       the Data Service.
+    #     slot_uri: dcat:contactPoint
+    #     range: Kind
+    #     required: false
+    #     recommended: true
+    #     multivalued: true
+    #     inlined_as_list: true
+    #   description:
+    #     name: description
+    #     description: A free-text account of the Data Service.
+    #     slot_uri: dcterms:description
+    #     range: string
+    #     required: false
+    #     multivalued: true
+    #     inlined_as_list: true
+    #   documentation:
+    #     name: documentation
+    #     description: A page or document about this Data Service
+    #     slot_uri: foaf:page
+    #     range: Document
+    #     required: false
+    #     multivalued: true
+    #     inlined_as_list: true
+    #   endpoint_URL:
+    #     name: endpoint_URL
+    #     description: The root location or primary endpoint of the service (an IRI).
+    #     slot_uri: dcat:endpointURL
+    #     range: Resource
+    #     required: true
+    #     multivalued: true
+    #     inlined_as_list: true
+    #   endpoint_description:
+    #     name: endpoint_description
+    #     description: A description of the services available via the end-points, including
+    #       their operations, parameters etc.
+    #     slot_uri: dcat:endpointDescription
+    #     range: Resource
+    #     required: false
+    #     recommended: true
+    #     multivalued: true
+    #     inlined_as_list: true
+    #   format:
+    #     name: format
+    #     description: The structure that can be returned by querying the endpointURL.
+    #     slot_uri: dcterms:format
+    #     range: MediaTypeOrExtent
+    #     required: false
+    #     multivalued: true
+    #     inlined_as_list: true
+    #   keyword:
+    #     name: keyword
+    #     description: A keyword or tag describing the Data Service.
+    #     slot_uri: dcat:keyword
+    #     range: string
+    #     required: false
+    #     recommended: true
+    #     multivalued: true
+    #     inlined_as_list: true
+    #   landing_page:
+    #     name: landing_page
+    #     description: A web page that provides access to the Data Service and/or additional
+    #       information.
+    #     slot_uri: dcat:landingPage
+    #     range: Document
+    #     required: false
+    #     multivalued: true
+    #     inlined_as_list: true
+    #   licence:
+    #     name: licence
+    #     description: A licence under which the Data service is made available.
+    #     slot_uri: dcterms:license
+    #     range: LicenseDocument
+    #     required: false
+    #     multivalued: false
+    #     inlined_as_list: true
+    #   publisher:
+    #     name: publisher
+    #     description: An entity (organisation) responsible for making the Data Service
+    #       available.
+    #     slot_uri: dcterms:publisher
+    #     range: Agent
+    #     required: false
+    #     multivalued: false
+    #     inlined_as_list: true
+    #   serves_dataset:
+    #     name: serves_dataset
+    #     description: This property refers to a collection of data that this data service
+    #       can distribute.
+    #     slot_uri: dcat:servesDataset
+    #     range: Dataset
+    #     required: false
+    #     multivalued: true
+    #     inlined_as_list: true
+    #   theme:
+    #     name: theme
+    #     description: A category of the Data Service.
+    #     slot_uri: dcat:theme
+    #     range: Concept
+    #     required: false
+    #     recommended: true
+    #     multivalued: true
+    #     inlined_as_list: true
+    #   title:
+    #     name: title
+    #     description: A name given to the Data Service.
+    #     slot_uri: dcterms:title
+    #     range: string
+    #     required: true
+    #     multivalued: true
+    #     inlined_as_list: true
+    class_uri: dcat:DataService
+  RightsStatement:
+    name: RightsStatement
+    description: See [DCAT-AP specs:RightsStatement](https://semiceu.github.io/DCAT-AP/releases/3.0.0/#RightsStatement)
+    is_a: SupportiveEntity
+    class_uri: dcterms:RightsStatement
+  SupportiveEntity:
+    name: SupportiveEntity
+    description: The supportive entities are supporting the main entities in the Application
+      Profile. They are included in the Application Profile because they form the
+      range of properties.    

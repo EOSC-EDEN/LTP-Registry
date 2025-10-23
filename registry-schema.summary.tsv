@@ -1,0 +1,6 @@
+Class Name	Parent Class	YAML Class Name	Description	Flags	Slot Name	YAML Slot Name	Range	Card	Slot Description	URI
+DataService		DataService	See [DCAT-AP specs:DataService](https://semiceu.github.io/DCAT-AP/releases/3.0.0/#DataService)							
+					access_rights	DataService_access_rights	RightsStatement	0..1	Information regarding access or restrictions based on privacy, security, or other policies.	dcterms:accessRights
+RightsStatement	SupportiveEntity	RightsStatement	See [DCAT-AP specs:RightsStatement](https://semiceu.github.io/DCAT-AP/releases/3.0.0/#RightsStatement)							
+SupportiveEntity		SupportiveEntity	The supportive entities are supporting the main entities in the Application Profile. They are included in the Application Profile because they form the range of properties.
+
