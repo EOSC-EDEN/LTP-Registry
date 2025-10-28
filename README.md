@@ -27,10 +27,12 @@ Copy output to https://mermaid.live
 Example data: [registry-data.ttl](registry-data.ttl)
 
 Example SPARQL queries:
-* [registry-query01.rq](registry-query01.rq) - query: all instances of dcat:DataService and their properties and values
 
 
 Run SPARQL queries: with [Apache Jena Commands](https://jena.apache.org/download/index.cgi) 
+
+
+[registry-query01-DataServices.rq](registry-query01-DataServices.rq) - query: all instances of dcat:DataService and their properties and values
 
 `arq --data registry-data.ttl --query registry-query01-DataServices.rq`
 
@@ -45,4 +47,20 @@ Run SPARQL queries: with [Apache Jena Commands](https://jena.apache.org/download
 | <https://eden-fidelis.eu/example/registry/service/1> | rdfs:label       | "DANS Data Vault Catalog"@en                                                                                                                                                                                                                     |
 | <https://eden-fidelis.eu/example/registry/service/1> | dct:title        | "DANS Data Vault Catalog"@en                                                                                                                                                                                                                     |
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+```
+
+
+[registry-query02-Contact.rq](registry-query02-Contact.rq) - query: all instances of contacts (`vcard:Kind`) and their properties
+
+`arq --data registry-data.ttl --query registry-query02-Contact.rq`
+
+```
+----------------------------------------------------------------------------------------------
+| dataService     | prop           | val                                           | contact |
+==============================================================================================
+| edenr:contact_1 | vcard:hasEmail | <mailto:info@dans.knaw.nl>                    |         |
+| edenr:contact_1 | rdf:type       | vcard:Kind                                    |         |
+| edenr:contact_1 | vcard:fn       | "Data Archiving Networked Services (DANS)"@en |         |
+| edenr:contact_1 | vcard:hasURL   | <https://dans.knaw.nl/>                       |         |
+----------------------------------------------------------------------------------------------
 ```

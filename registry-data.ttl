@@ -8,20 +8,23 @@ PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
 PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
 
-<https://eden-fidelis.eu/example/registry/service/1>
+<https://eden-fidelis.eu/example/registry/service_1>
     rdf:type       dcat:DataService;
     rdfs:label     "DANS Data Vault Catalog"@en;
     dcat:endpointURL  <https://catalog.vault.datastations.nl>; # mandatory
     dct:title      "DANS Data Vault Catalog"@en ; # mandatory
-    dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact/1> ;
+    dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact_1> ;
     # dcat:endpointDescription ""; # recommended
     dct:description "A safe and sustainable long-term preservation archive that meets the highest archiving requirements. The DANS Data Vault contains all datasets that have been entrusted to DANS, including the data from the Data Stations and DataverseNL."@en ; # recommended
-    dcat:landingPage <https://catalog.vault.datastations.nl> . 
+    dcat:landingPage <https://catalog.vault.datastations.nl> ;  
+    dct:publisher <https://eden-fidelis.eu/example/registry/org_1>
+
+    . 
 
 
 
 # vcard:Kind class for contact
-<https://eden-fidelis.eu/example/registry/contact/1>
+<https://eden-fidelis.eu/example/registry/contact_1>
         rdf:type  vcard:Kind ;
         vcard:fn  "Data Archiving Networked Services (DANS)"@en ;
         vcard:hasEmail <mailto:info@dans.knaw.nl> ; 
