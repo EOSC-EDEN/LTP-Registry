@@ -12,15 +12,44 @@ PREFIX geon: <http://www.geonames.org/ontology#>
 
 
 <https://eden-fidelis.eu/example/registry/service_1>
-    rdf:type       dcat:DataService;
-    rdfs:label     "DANS Data Vault Catalog"@en;
-    dcat:endpointURL  <https://catalog.vault.datastations.nl>; # mandatory
+    rdf:type       dcat:DataService ;
+    rdfs:label     "DANS Data Vault Catalog"@en ;
     dct:title      "DANS Data Vault Catalog"@en ; # mandatory
+    dcat:endpointURL  <https://catalog.vault.datastations.nl> ; # mandatory
     dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact_1> ;
     # dcat:endpointDescription ""; # recommended
     dct:description "A safe and sustainable long-term preservation archive that meets the highest archiving requirements. The DANS Data Vault contains all datasets that have been entrusted to DANS, including the data from the Data Stations and DataverseNL."@en ; # recommended
     dcat:landingPage <https://catalog.vault.datastations.nl> ;  
-    dct:publisher <https://eden-fidelis.eu/example/registry/org_1> . 
+    dct:publisher <https://eden-fidelis.eu/example/registry/org_1> ;
+    foaf:page: <https://dans-knaw.github.io/dans-datastation-architecture/vaas/> . # documentation
+    
+<https://eden-fidelis.eu/example/registry/service_2>
+    rdf:type       dcat:DataService ;
+    rdfs:label     "DANS Data Station Social Sciences and Humanities"@en ;
+    dct:title      "DANS Data Station Social Sciences and Humanities"@en ; # mandatory
+    dcat:endpointURL  <https://ssh.datastations.nl/api/> ; # mandatory
+    dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact_1> ;
+    # dcat:endpointDescription ""; # recommended
+    dct:description "This data station allows you to deposit and search for data within the social sciences and humanities. The metadata of our Data Station SSH is also available in the national ODISSEI portal and the European CESSDA Data Catalogue."@en ; # recommended
+    dcat:landingPage <https://ssh.datastations.nl/> ;  
+    dct:publisher <https://eden-fidelis.eu/example/registry/org_1> ;
+    foaf:page <https://dans-knaw.github.io/dans-datastation-architecture/>, <https://support.datastations.nl/en/support/solutions/folders/80000692438> .  
+
+<https://eden-fidelis.eu/example/registry/service_3>
+    rdf:type       dcat:DataService ;
+    rdfs:label     "DANS Data SWORD2 interface for Data Station Social Sciences and Humanities"@en ;
+    dct:title       "DANS Data SWORD2 interface for Data Station Social Sciences and Humanities"@en ; 
+    dcat:endpointURL  <https://sword2.ssh.datastations.nl> ; # mandatory
+    dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact_1> ;
+    dct:description "SWORD2 client that deposits datasets to the DANS Data Station Social Sciences and Humanities"@en ; 
+    dct:publisher <https://eden-fidelis.eu/example/registry/org_1> ;
+    foaf:page <https://dans-knaw.github.io/dd-dans-sword2-examples/>.  
+
+
+
+
+
+# documentation: https://support.datastations.nl/en/support/solutions/folders/80000692438
 
 <https://eden-fidelis.eu/example/registry/org_1>
     rdf:type org:Organization ;

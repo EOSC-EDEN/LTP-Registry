@@ -13,3 +13,4 @@ SELECT ?dataService ?prop ?val ?contact{
     ?dataService a dcat:DataService;
                  ?prop ?val .
 }
+ORDER BY ?dataService
