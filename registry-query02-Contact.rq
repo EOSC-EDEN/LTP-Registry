@@ -10,6 +10,6 @@ PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
 
 
 SELECT ?dataService ?prop ?val ?contact{
-    ?dataService a vcard:Organization;
+    ?dataService a vcard:Kind;
                  ?prop ?val .
 }
