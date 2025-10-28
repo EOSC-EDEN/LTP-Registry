@@ -13,11 +13,21 @@ PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
     rdfs:label     "DANS Data Vault Catalog"@en;
     dcat:endpointURL  <https://catalog.vault.datastations.nl>; # mandatory
     dct:title      "DANS Data Vault Catalog"@en ; # mandatory
-    # dcat:contactPoint "info@dans.knaw.nl"; # recommended - use Vcard
+    dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact/1> ;
     # dcat:endpointDescription ""; # recommended
     dct:description "A safe and sustainable long-term preservation archive that meets the highest archiving requirements. The DANS Data Vault contains all datasets that have been entrusted to DANS, including the data from the Data Stations and DataverseNL."@en ; # recommended
     dcat:landingPage <https://catalog.vault.datastations.nl> . 
 
+
+
+# vcard:Kind class for contact
+<https://eden-fidelis.eu/example/registry/contact/1>
+        rdf:type  vcard:Kind ;
+        vcard:fn  "Data Archiving Networked Services (DANS)"@en ;
+        vcard:hasEmail <mailto:info@dans.knaw.nl> ; 
+        vcard:hasURL <https://dans.knaw.nl/>  .
+        # vcard:hasUID <https://ror.org/008pnp284>;
+# MORE ON Vcard in DCAT-AP: https://interoperable-europe.ec.europa.eu/collection/semic-support-centre/solution/dcat-application-profile-implementation-guidelines/release-0
 
 
 

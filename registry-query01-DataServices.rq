@@ -9,8 +9,7 @@ PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
 
 
-SELECT ?dataService ?prop ?val {
+SELECT ?dataService ?prop ?val ?contact{
     ?dataService a dcat:DataService;
-                 ?prop ?val ;
-
+                 ?prop ?val .
 }

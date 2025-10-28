@@ -32,7 +32,7 @@ Example SPARQL queries:
 
 Run SPARQL queries: with [Apache Jena Commands](https://jena.apache.org/download/index.cgi) 
 
-`arq --data registry-data.ttl --query registry-query01.rq `
+`arq --data registry-data.ttl --query registry-query01-DataServices.rq`
 
 ``` 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
