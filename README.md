@@ -26,6 +26,15 @@ Copy output to https://mermaid.live
 
 Example data: [registry-data.ttl](registry-data.ttl)
 
+Main Entities:
+* `dcat:DataService` for describing Data Services 
+* `org:Organization` for describing Organizations
+* `vcard:Kind` for describing organization/service contact (see [^1])
+
+
+
+
+
 Example SPARQL queries:
 
 
@@ -37,16 +46,16 @@ Run SPARQL queries: with [Apache Jena Commands](https://jena.apache.org/download
 `arq --data registry-data.ttl --query registry-query01-DataServices.rq`
 
 ``` 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| dataService                                          | prop             | val                                                                                                                                                                                                                                              |
-==============================================================================================================================================================================================================================================================================================================================
-| <https://eden-fidelis.eu/example/registry/service/1> | dct:description  | "A safe and sustainable long-term preservation archive that meets the highest archiving requirements. The DANS Data Vault contains all datasets that have been entrusted to DANS, including the data from the Data Stations and DataverseNL."@en |
-| <https://eden-fidelis.eu/example/registry/service/1> | rdf:type         | dcat:DataService                                                                                                                                                                                                                                 |
-| <https://eden-fidelis.eu/example/registry/service/1> | dcat:landingPage | <https://catalog.vault.datastations.nl>                                                                                                                                                                                                          |
-| <https://eden-fidelis.eu/example/registry/service/1> | dcat:endpointURL | <https://catalog.vault.datastations.nl>                                                                                                                                                                                                          |
-| <https://eden-fidelis.eu/example/registry/service/1> | rdfs:label       | "DANS Data Vault Catalog"@en                                                                                                                                                                                                                     |
-| <https://eden-fidelis.eu/example/registry/service/1> | dct:title        | "DANS Data Vault Catalog"@en                                                                                                                                                                                                                     |
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+====================================================================================================================================================================================================================================================================================================
+| edenr:service_1 | dct:description   | "A safe and sustainable long-term preservation archive that meets the highest archiving requirements. The DANS Data Vault contains all datasets that have been entrusted to DANS, including the data from the Data Stations and DataverseNL."@en |         |
+| edenr:service_1 | rdf:type          | dcat:DataService                                                                                                                                                                                                                                 |         |
+| edenr:service_1 | dcat:landingPage  | <https://catalog.vault.datastations.nl>                                                                                                                                                                                                          |         |
+| edenr:service_1 | dcat:endpointURL  | <https://catalog.vault.datastations.nl>                                                                                                                                                                                                          |         |
+| edenr:service_1 | rdfs:label        | "DANS Data Vault Catalog"@en                                                                                                                                                                                                                     |         |
+| edenr:service_1 | dcat:contactPoint | edenr:contact_1                                                                                                                                                                                                                                  |         |
+| edenr:service_1 | dct:title         | "DANS Data Vault Catalog"@en                                                                                                                                                                                                                     |         |
+| edenr:service_1 | dct:publisher     | edenr:org_1                                                                                                                                                                                                                                      |         |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ```
 
 
@@ -64,3 +73,25 @@ Run SPARQL queries: with [Apache Jena Commands](https://jena.apache.org/download
 | edenr:contact_1 | vcard:hasURL   | <https://dans.knaw.nl/>                       |         |
 ----------------------------------------------------------------------------------------------
 ```
+
+
+[registry-query03-Orgs.rq](registry-query03-Orgs.rq) - query: all instances of Organizations (`org:Organization`) and their properties
+
+`arq --data registry-data.ttl --query registry-query03-Orgs.rq`
+
+```
+----------------------------------------------------------------------------------------------
+| dataService | prop               | val                                           | contact |
+==============================================================================================
+| edenr:org_1 | vcard:country-name | "The Netherlands"@en                          |         |
+| edenr:org_1 | rdf:type           | org:Organization                              |         |
+| edenr:org_1 | org:identifier     | <https://ror.org/008pnp284>                   |         |
+| edenr:org_1 | geon:geonamesID    | <https://www.geonames.org/2747373>            |         |
+| edenr:org_1 | foaf:name          | "Data Archiving Networked Services (DANS)"@en |         |
+----------------------------------------------------------------------------------------------
+```
+
+
+# FOOTNOTES
+
+* [^1]: More on Vcard in DCAT-AP: https://interoperable-europe.ec.europa.eu/collection/semic-support-centre/solution/dcat-application-profile-implementation-guidelines/release-0

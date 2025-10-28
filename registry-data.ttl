@@ -2,11 +2,14 @@ PREFIX adms:  <http://www.w3.org/ns/adms#>
 PREFIX dcat:  <http://www.w3.org/ns/dcat#>
 PREFIX dct:   <http://purl.org/dc/terms/>
 PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX org:   <http://www.w3.org/ns/org#>
 PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
 PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
+PREFIX geon: <http://www.geonames.org/ontology#>
+
 
 <https://eden-fidelis.eu/example/registry/service_1>
     rdf:type       dcat:DataService;
@@ -17,20 +20,21 @@ PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
     # dcat:endpointDescription ""; # recommended
     dct:description "A safe and sustainable long-term preservation archive that meets the highest archiving requirements. The DANS Data Vault contains all datasets that have been entrusted to DANS, including the data from the Data Stations and DataverseNL."@en ; # recommended
     dcat:landingPage <https://catalog.vault.datastations.nl> ;  
-    dct:publisher <https://eden-fidelis.eu/example/registry/org_1>
+    dct:publisher <https://eden-fidelis.eu/example/registry/org_1> . 
 
-    . 
+<https://eden-fidelis.eu/example/registry/org_1>
+    rdf:type org:Organization ;
+    foaf:name "Data Archiving Networked Services (DANS)"@en ;
+    org:identifier <https://ror.org/008pnp284> ;
+    vcard:country-name "The Netherlands"@en ;
+    geon:geonamesID <https://www.geonames.org/2747373> ;
+    .
 
-
-
-# vcard:Kind class for contact
 <https://eden-fidelis.eu/example/registry/contact_1>
         rdf:type  vcard:Kind ;
         vcard:fn  "Data Archiving Networked Services (DANS)"@en ;
         vcard:hasEmail <mailto:info@dans.knaw.nl> ; 
         vcard:hasURL <https://dans.knaw.nl/>  .
-        # vcard:hasUID <https://ror.org/008pnp284>;
-# MORE ON Vcard in DCAT-AP: https://interoperable-europe.ec.europa.eu/collection/semic-support-centre/solution/dcat-application-profile-implementation-guidelines/release-0
 
 
 
