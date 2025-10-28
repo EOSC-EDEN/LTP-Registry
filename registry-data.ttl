@@ -16,7 +16,7 @@ PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
     # dcat:contactPoint "info@dans.knaw.nl"; # recommended - use Vcard
     # dcat:endpointDescription ""; # recommended
     dct:description "A safe and sustainable long-term preservation archive that meets the highest archiving requirements. The DANS Data Vault contains all datasets that have been entrusted to DANS, including the data from the Data Stations and DataverseNL."@en ; # recommended
-    dcat:landingPage <https://catalog.vault.datastations.nl>;
+    dcat:landingPage <https://catalog.vault.datastations.nl> . 
 
 
 
