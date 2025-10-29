@@ -1,4 +1,6 @@
-# Repository Services Registry Proof-of-Concept
+# Repository:  Proof-of-concept of Registry for Long-Term Preservation Services
+
+See task description and list of requirements in [PoC-LTP-Services-Registry.md](PoC-LTP-Services-Registry.md) 
 
 ## Data Model
 
