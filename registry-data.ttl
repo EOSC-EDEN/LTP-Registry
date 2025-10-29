@@ -21,7 +21,7 @@ PREFIX geon: <http://www.geonames.org/ontology#>
     dct:description "A safe and sustainable long-term preservation archive that meets the highest archiving requirements. The DANS Data Vault contains all datasets that have been entrusted to DANS, including the data from the Data Stations and DataverseNL."@en ; # recommended
     dcat:landingPage <https://catalog.vault.datastations.nl> ;  
     dct:publisher <https://eden-fidelis.eu/example/registry/org_1> ;
-    foaf:page: <https://dans-knaw.github.io/dans-datastation-architecture/vaas/> . # documentation
+    foaf:page <https://dans-knaw.github.io/dans-datastation-architecture/vaas/> . # documentation
     
 <https://eden-fidelis.eu/example/registry/service_2>
     rdf:type       dcat:DataService ;
