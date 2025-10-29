@@ -28,7 +28,3 @@ The PoC of Registry for Long-Term Preservation Services  has the following requi
 * it **Should have** a model of the data (preference for data-model in [LinkML](https://linkml.io/) format, as it allows for easy data-format-conversions, visual representations and data validation)
 
 
-
-org:Organization
-dcat:DataService
-vcard: Kind
