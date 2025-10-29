@@ -24,7 +24,9 @@ The PoC of Registry for Long-Term Preservation Services  has the following requi
 * it **Must have** data for at least 5 to 10 Services from 2 or more organizations
 * it **Must have** a web UI that lists the services present in the data, and a few filtering facets (ie. country, publisher)
 * the web UI  **Must get** its data elements, through queries
+* the web UI facets **Should allow** for the selection of multiple-facets and multiple-values per facet
 * it **Should have** the data store in a triple-store, with a SPARQL end-point. Alternatively data can be, temporarily in RDF file, as long as web-ui client side code can query it with SPARQL
 * it **Should have** a model of the data (preference for data-model in [LinkML](https://linkml.io/) format, as it allows for easy data-format-conversions, visual representations and data validation)
+* software components - web UI and triple-store - **Should be** dockerized 
 
 
