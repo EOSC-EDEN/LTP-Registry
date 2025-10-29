@@ -113,6 +113,27 @@ Run SPARQL queries: with [Apache Jena Commands](https://jena.apache.org/download
 ----------------------------------------------------------------------------------------------
 ```
 
+# Docker Containers
+
+## Fuseki docker container
+
+Download the jena-fuseki-docker package, which contains a Dockerfile, docker-compose file, and helper scripts to create a docker container for Apache Jena Fuseki.
+`wget https://repo1.maven.org/maven2/org/apache/jena/jena-fuseki-docker/5.6.0/jena-fuseki-docker-5.6.0.zip`
+Other versions of Fuseki can be found at from https://repo1.maven.org/maven2/org/apache/jena/jena-fuseki-docker/
+
+Unzip the container: `unzip jena-fuseki-docker-5.6.0.zip`
+
+Navigate to the `jena-fuseki-docker-5.6.0/` directory: `cd jena-fuseki-docker-5.6.0`
+
+Build the image specified in `jena-fuseki-docker-5.6.0/docker-compose.yaml` with the version number of Apache Jena you wish to use, we will be using version 5.6.0: `docker compose build --build-arg JENA_VERSION=5.6.0`
+
+run the Fuseki container, with an in-memory, updatable dataset at http://localhost:3030/ds: `docker compose run --rm --service-ports fuseki --mem /ds -d`
+
+
+Check the container:
+* `curl localhost:3030/$/ping`
+* `curl localhost:3030/$/metrics`
+
 
 # FOOTNOTES
 
