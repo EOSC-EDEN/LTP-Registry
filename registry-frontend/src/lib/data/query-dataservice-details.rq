@@ -1,0 +1,57 @@
+PREFIX adms:  <http://www.w3.org/ns/adms#>
+PREFIX dcat:  <http://www.w3.org/ns/dcat#>
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX geon:  <http://www.geonames.org/ontology#>
+
+# Query to fetch all properties of a DataService with their labels
+# Returns: service, prop (property URI), propLabel, val (value), valLabel
+
+SELECT DISTINCT ?service ?prop ?propLabel ?val ?valLabel
+{
+    ?service a dcat:DataService .
+
+    # PLACEHOLDER: Dynamic filters will be injected here
+
+    ?service ?prop ?val .
+
+    # Exclude rdf:type from results (we already know it's a DataService)
+    FILTER(?prop != rdf:type)
+
+    # Get property label with fallback
+    OPTIONAL {
+        ?prop rdfs:label ?propLabelRaw .
+    }
+    BIND(COALESCE(?propLabelRaw, REPLACE(STR(?prop), "^.*[/#]([^/#]+)$", "$1")) AS ?propLabelRaw2)
+    BIND(REPLACE(?propLabelRaw2, "-", " ") AS ?propLabelNoHyphens)
+    BIND(REPLACE(?propLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?propLabelSpaced)
+    BIND(CONCAT(UCASE(SUBSTR(?propLabelSpaced, 1, 1)), SUBSTR(?propLabelSpaced, 2)) AS ?propLabel)
+
+    # Get value label with fallback
+    OPTIONAL {
+        # Try to get label for the value if it's a resource
+        ?val rdfs:label ?valLabelRaw .
+    }
+    OPTIONAL {
+        # Try foaf:name for organizations
+        ?val foaf:name ?valNameRaw .
+    }
+    OPTIONAL {
+        # Try vcard:fn for contacts
+        ?val vcard:fn ?valFnRaw .
+    }
+    # Use the first available label or extract from URI
+    BIND(COALESCE(?valLabelRaw, ?valNameRaw, ?valFnRaw,
+        IF(isURI(?val), REPLACE(STR(?val), "^.*[/#]([^/#]+)$", "$1"), STR(?val))
+    ) AS ?valLabelRaw2)
+    BIND(REPLACE(?valLabelRaw2, "-", " ") AS ?valLabelNoHyphens)
+    BIND(REPLACE(?valLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?valLabelSpaced)
+    BIND(CONCAT(UCASE(SUBSTR(?valLabelSpaced, 1, 1)), SUBSTR(?valLabelSpaced, 2)) AS ?valLabel)
+}
+ORDER BY ?service ?propLabel
