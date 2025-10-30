@@ -39,7 +39,7 @@ Install requirements (LinkML):
 - Entity-Relationship (ER) Diagram `gen-erdiagram --format mermaid  registry-schema.yaml -c DataService`
   Copy output to https://mermaid.live
 
-![registry-schema.png mermaid schema representation ](registry-schema.png)
+![registry-schema.png mermaid schema representation ](docs/registry-schema.png)
 
 # Data
 
