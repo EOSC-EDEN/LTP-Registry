@@ -1,10 +1,23 @@
 # Repository: Proof-of-concept of Registry for Long-Term Preservation Services
 
+**PoC for an RDF-based *Registry for Long-Term Preservation Services*, for the ESOC EDEN WP2 T2.2.**
+
+At its core the Registry consists of RDF data, stored in a triple-store. Client-side code, uses SPARQL queries to get contents from the triple-store and use them to populate the front-end's Data Services Index and Facets. 
+
+Core components: 
+* RDF data [registry-data.ttl](/registry-data.ttl)
+* [registry-frontend/](/registry-frontend/)
+* Fuseki triple-store
+
+![Screenshot of Registry front-end](/docs/registry.png)
+
+
+
 See task description and list of requirements in [PoC-LTP-Services-Registry.md](PoC-LTP-Services-Registry.md)
 
 # Quick start
 
-**_Follow quick start in [README.md](/registry-frontend/README.md)_**
+To run the front-end & Fuseki container **Follow quick start in [registry-frontend/README.md](/registry-frontend/README.md)**
 
 # Data Model
 
