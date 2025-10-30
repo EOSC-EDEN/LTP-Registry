@@ -11,7 +11,23 @@ PREFIX geon: <http://www.geonames.org/ontology#>
 PREFIX org:   <http://www.w3.org/ns/org#>
 
 
-SELECT ?dataService ?prop ?val ?contact{
-    ?dataService a org:Organization;
-                 ?prop ?val .
-}
+# SELECT ?dataService ?prop ?val ?contact{
+#     ?dataService a org:Organization;
+#                  ?prop ?val .
+# }
+
+# ?org ?ds_title 
+SELECT ?org ?org_name (COUNT(?ds) AS ?ds_count_by_org) {
+    ?org a org:Organization ;
+         foaf:name ?org_name .
+
+    ?ds a dcat:DataService ;
+        dct:title ?ds_title .      
+ }
+GROUP BY ?org ?org_name
+
+
+# Following query: to get the 
+# SELECT {
+#     ?ds dct:title ?ds_title .
+# }
