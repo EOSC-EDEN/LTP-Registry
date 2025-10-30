@@ -1,0 +1,98 @@
+PREFIX adms:  <http://www.w3.org/ns/adms#>
+PREFIX dcat:  <http://www.w3.org/ns/dcat#>
+PREFIX dct:   <http://purl.org/dc/terms/>
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
+PREFIX org:   <http://www.w3.org/ns/org#>
+PREFIX geon:  <http://www.geonames.org/ontology#>
+
+# Query to get all filterable facets for DataServices
+# This includes:
+# 1. Direct properties of DataServices (theme, keyword, etc.)
+# 2. Related Organizations (via publisher, creator, etc.)
+# 3. Related Contact Points (vcard:Kind)
+
+SELECT
+    ?prop
+    ?propLabel
+    ?val
+    ?valLabel
+    (COUNT(DISTINCT ?service) as ?count)
+{
+    {
+        # Direct DataService properties
+        ?service a dcat:DataService;
+                ?prop ?val .
+
+        # Filter out content properties - only keep filter-worthy properties
+        FILTER(
+            ?prop != rdf:type &&
+            ?prop != rdfs:label &&
+            ?prop != dct:title &&
+            ?prop != dct:description &&
+            ?prop != dcat:endpointURL &&
+            ?prop != dcat:landingPage
+        )
+
+        # Try to get explicit rdfs:label for property
+        OPTIONAL {
+            ?prop rdfs:label ?propLabelRaw .
+        }
+
+        # Try to get explicit rdfs:label for value if it's a resource
+        OPTIONAL {
+            ?val rdfs:label ?valLabelRaw .
+        }
+
+        # For property: use rdfs:label if available, otherwise extract from URI
+        BIND(COALESCE(?propLabelRaw, REPLACE(STR(?prop), "^.*[/#]([^/#]+)$", "$1")) AS ?propLabelRaw2)
+        # Format: replace hyphens with spaces, add space before capitals, capitalize first letter
+        BIND(REPLACE(?propLabelRaw2, "-", " ") AS ?propLabelNoHyphens)
+        BIND(REPLACE(?propLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?propLabelSpaced)
+        BIND(CONCAT(UCASE(SUBSTR(?propLabelSpaced, 1, 1)), SUBSTR(?propLabelSpaced, 2)) AS ?propLabel)
+
+        # For value: use rdfs:label if available, otherwise extract from URI, or use literal value
+        BIND(COALESCE(?valLabelRaw,
+                      IF(isURI(?val), REPLACE(STR(?val), "^.*[/#]([^/#]+)$", "$1"), STR(?val)))
+             AS ?valLabelRaw2)
+        # Format: replace hyphens with spaces, capitalize first letter
+        BIND(REPLACE(?valLabelRaw2, "-", " ") AS ?valLabelNoHyphens2)
+        BIND(CONCAT(UCASE(SUBSTR(?valLabelNoHyphens2, 1, 1)), SUBSTR(?valLabelNoHyphens2, 2)) AS ?valLabel)
+    }
+    UNION
+    {
+        # Organizations as filter facet (via publisher, creator, etc.)
+        ?service a dcat:DataService;
+                ?linkProp ?org .
+        ?org a org:Organization;
+             foaf:name ?orgName .
+
+        # Only include organization links (publisher, creator, etc.)
+        FILTER(?linkProp IN (dct:publisher, dct:creator, dct:rightsHolder))
+
+        BIND(<http://purl.org/dc/terms/publisher> AS ?prop)
+        BIND("Publisher" AS ?propLabel)
+        BIND(?org AS ?val)
+        BIND(?orgName AS ?valLabel)
+    }
+    UNION
+    {
+        # Contact Points as filter facet
+        ?service a dcat:DataService;
+                dcat:contactPoint ?contact .
+        ?contact a vcard:Kind;
+                vcard:fn ?contactName .
+
+        BIND(<http://www.w3.org/ns/dcat#contactPoint> AS ?prop)
+        BIND("Contact Point" AS ?propLabel)
+        BIND(?contact AS ?val)
+        BIND(?contactName AS ?valLabel)
+    }
+}
+GROUP BY ?prop ?propLabel ?val ?valLabel
+HAVING (COUNT(DISTINCT ?service) > 0)
+ORDER BY ?prop ?val
