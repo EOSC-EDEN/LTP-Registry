@@ -1,5 +1,31 @@
 # EDEN Registry Catalog - Proof of Concept
 
+## Quick Start
+
+### 1. Install Dependencies
+
+```bash
+pnpm install
+```
+
+### 2. Start Fuseki and Load Data
+
+```bash
+# Start Apache Jena Fuseki in Docker
+docker compose up -d
+
+# Load the registry RDF data
+./load-fuseki-data.sh
+```
+
+### 3. Start Development Server
+
+```bash
+npm run dev
+```
+
+Visit `http://localhost:5173` to see the catalog interface.
+
 A web-based catalog interface for the EDEN Registry of Long-Term Preservation Services, demonstrating dynamic querying and filtering of RDF/DCAT-AP metadata via SPARQL.
 
 ## Overview
@@ -168,32 +194,6 @@ The endpoint URL is configurable, allowing the same codebase to work with differ
 4. **Label Resolution**: Sophisticated SPARQL patterns extract human-readable labels from RDF data, falling back gracefully when labels aren't present.
 
 5. **Real-Time Filtering**: User interactions trigger server-side SPARQL queries with injected filters, demonstrating how semantic queries can power interactive UIs.
-
-## Quick Start
-
-### 1. Install Dependencies
-
-```bash
-pnpm install
-```
-
-### 2. Start Fuseki and Load Data
-
-```bash
-# Start Apache Jena Fuseki in Docker
-docker compose up -d
-
-# Load the registry RDF data
-./load-fuseki-data.sh
-```
-
-### 3. Start Development Server
-
-```bash
-npm run dev
-```
-
-Visit `http://localhost:5173` to see the catalog interface.
 
 ## Development Commands
 
