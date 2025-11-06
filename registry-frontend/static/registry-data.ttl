@@ -19,10 +19,10 @@ PREFIX geon: <http://www.geonames.org/ontology#>
     dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact_1> ;
     # dcat:endpointDescription ""; # recommended
     dct:description "A safe and sustainable long-term preservation archive that meets the highest archiving requirements. The DANS Data Vault contains all datasets that have been entrusted to DANS, including the data from the Data Stations and DataverseNL."@en ; # recommended
-    dcat:landingPage <https://catalog.vault.datastations.nl> ;  
+    dcat:landingPage <https://catalog.vault.datastations.nl> ;
     dct:publisher <https://eden-fidelis.eu/example/registry/org_1> ;
     foaf:page <https://dans-knaw.github.io/dans-datastation-architecture/vaas/> . # documentation
-    
+
 <https://eden-fidelis.eu/example/registry/service_2>
     rdf:type       dcat:DataService ;
     rdfs:label     "DANS Data Station Social Sciences and Humanities"@en ;
@@ -31,19 +31,19 @@ PREFIX geon: <http://www.geonames.org/ontology#>
     dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact_1> ;
     # dcat:endpointDescription ""; # recommended
     dct:description "This data station allows you to deposit and search for data within the social sciences and humanities. The metadata of our Data Station SSH is also available in the national ODISSEI portal and the European CESSDA Data Catalogue."@en ; # recommended
-    dcat:landingPage <https://ssh.datastations.nl/> ;  
+    dcat:landingPage <https://ssh.datastations.nl/> ;
     dct:publisher <https://eden-fidelis.eu/example/registry/org_1> ;
-    foaf:page <https://dans-knaw.github.io/dans-datastation-architecture/>, <https://support.datastations.nl/en/support/solutions/folders/80000692438> .  
+    foaf:page <https://dans-knaw.github.io/dans-datastation-architecture/>, <https://support.datastations.nl/en/support/solutions/folders/80000692438> .
 
 <https://eden-fidelis.eu/example/registry/service_3>
     rdf:type       dcat:DataService ;
     rdfs:label     "DANS Data SWORD2 interface for Data Station Social Sciences and Humanities"@en ;
-    dct:title       "DANS Data SWORD2 interface for Data Station Social Sciences and Humanities"@en ; 
+    dct:title       "DANS Data SWORD2 interface for Data Station Social Sciences and Humanities"@en ;
     dcat:endpointURL  <https://sword2.ssh.datastations.nl> ; # mandatory
     dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact_1> ;
-    dct:description "SWORD2 client that deposits datasets to the DANS Data Station Social Sciences and Humanities"@en ; 
+    dct:description "SWORD2 client that deposits datasets to the DANS Data Station Social Sciences and Humanities"@en ;
     dct:publisher <https://eden-fidelis.eu/example/registry/org_1> ;
-    foaf:page <https://dans-knaw.github.io/dd-dans-sword2-examples/>.  
+    foaf:page <https://dans-knaw.github.io/dd-dans-sword2-examples/>.
 
 
 
@@ -56,21 +56,38 @@ PREFIX geon: <http://www.geonames.org/ontology#>
     foaf:name "Data Archiving Networked Services (DANS)"@en ;
     org:identifier <https://ror.org/008pnp284> ;
     vcard:country-name "The Netherlands"@en ;
-    geon:geonamesID <https://www.geonames.org/2747373> ;
-    .
+    geon:geonamesID <https://www.geonames.org/2747373> .
 
 <https://eden-fidelis.eu/example/registry/contact_1>
-        rdf:type  vcard:Kind ;
-        vcard:fn  "Data Archiving Networked Services (DANS)"@en ;
-        vcard:hasEmail <mailto:info@dans.knaw.nl> ; 
-        vcard:hasURL <https://dans.knaw.nl/>  .
+    rdf:type  vcard:Kind ;
+    vcard:fn  "Data Archiving Networked Services (DANS)"@en ;
+    vcard:hasEmail <mailto:info@dans.knaw.nl> ;
+    vcard:hasURL <https://dans.knaw.nl/>  .
 
+# --- CSC (FINLAND) ENTRIES ---
 
+# 1. ORGANIZATION (Publisher)
+<https://eden-fidelis.eu/example/registry/org_2>
+    rdf:type           org:Organization ;
+    foaf:name          "CSC – IT Center for Science Ltd."@en ;
+    org:identifier     <https://ror.org/02qsfyn84> ; # ROR is a persistent ID for research orgs
+    vcard:country-name "Finland"@en .
 
+# 2. CONTACT POINT
+<https://eden-fidelis.eu/example/registry/contact_2>
+    rdf:type     vcard:Kind ;
+    vcard:fn     "National Digital Preservation Services Support"@en ;
+    vcard:hasEmail <mailto:pas-support@csc.fi> ;
+    vcard:hasURL <https://digitalpreservation.fi/> .
 
-# http://www.w3.org/ns/dcat#keyword
-# http://purl.org/dc/terms/conformsTo # An established (technical) standard to which the Data Service conforms. 
-
-# http://www.w3.org/ns/dcat#landingPage
-# http://data.europa.eu/r5r/applicableLegislation # The legislation that mandates the creation or management of the Data Service. 
-# http://purl.org/dc/terms/accessRights # Information regarding access or restrictions based on privacy, security, or other policies. 
+# 3. DATA SERVICE (Tool)
+<https://eden-fidelis.eu/example/registry/service_4>
+    rdf:type          dcat:DataService ;
+    rdfs:label        "File Validation Service (DPS-FI)"@en ;
+    dct:title         "File Validation Service for Finnish National Digital Preservation Services"@en ;
+    dct:description   """You can validate your files against the National Digital Preservation Services (DPS) in Finland using this online service. The service displays the validity and support in the DPS for the files being validated."""@en ;
+    dcat:endpointURL  <https://validation.digitalpreservation.fi/#/en> ;
+    dcat:landingPage  <https://digitalpreservation.fi/> ;
+    dct:publisher     <https://eden-fidelis.eu/example/registry/org_2> ;  # Link to the CSC organization
+    dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact_2> ; # Link to the CSC contact
+    foaf:page         <https://github.com/Digital-Preservation-Finland/file-scraper> . # Link to documentation/source code
