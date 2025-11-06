@@ -238,7 +238,7 @@ src/
     └── registry-data.ttl   # Sample RDF data
 ```
 
-## Extending the PoC
+## Extending the Registry
 
 ### Adding New Data
 

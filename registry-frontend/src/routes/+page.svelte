@@ -57,7 +57,7 @@
 </script>
 
 <CatalogShell
-	title="EDEN Registry Catalog PoC"
+	title="EOSC-EDEN Registry Catalog"
 	facets={facets.bindings}
 	onFilterChange={handleFilterChange}
 >
