@@ -81,7 +81,7 @@ PREFIX geon: <http://www.geonames.org/ontology#>
 <https://eden-fidelis.eu/example/registry/org_2>
     rdf:type           org:Organization ;
     foaf:name          "CSC – IT Center for Science Ltd."@en ;
-    org:identifier     <https://ror.org/02qsfyn84> ; # ROR is a persistent ID for research orgs
+    org:identifier     <https://ror.org/04m8m1253> ;
     vcard:country-name "Finland"@en .
 
 # 2. CONTACT POINT
