@@ -11,8 +11,6 @@ Core components:
 
 ![Screenshot of Registry front-end](/docs/registry.png)
 
-
-
 See task description and list of requirements in [PoC-LTP-Services-Registry.md](PoC-LTP-Services-Registry.md)
 
 # Quick start
@@ -25,14 +23,16 @@ To run the front-end & Fuseki container **Follow quick start in [registry-fronte
 
 Using [LinkML](https://linkml.io/) python library and application, to define the data model/schema for the registry entities in **[registry-schema.yaml](registry-schema.yaml)**
 
-Start a python virtual environment
+```bash
+# Start python virtual environment
+python3 -m venv venv
 
-- with python virtual environment: `python3 -m venv venv`
-- start virtual environment: `source venv/bin/activate`
+# Activate
+source venv/bin/activate
 
-Install requirements (LinkML):
-
-- `pip install -r requirements.txt`
+# Install requirements (LinkML)
+pip install -r requirements.txt
+```
 
 ## Data Model Representations
 

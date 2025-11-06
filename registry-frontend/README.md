@@ -1,34 +1,38 @@
 # EDEN Registry Catalog - Proof of Concept
 
-## Quick Start
-
-### 1. Install Dependencies
+## Prerequisites
 
 ```bash
-pnpm install
+# Install pnpm 
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+pnpm env use --global lts
 ```
 
-### 2. Start Fuseki and Load Data
+## Quick Start
 
 ```bash
-# Start Apache Jena Fuseki in Docker
+# Install Dependencies
+pnpm install
+
+# Start Fuseki and Load Data w/ Apache Jena Fuseki in Docker
 docker compose up -d
+
+# When prompted, select recommended version:
+# ▸ docker.io/stain/jena-fuseki:latest
 
 # Load the registry RDF data
 ./load-fuseki-data.sh
-```
 
-### 3. Start Development Server
-
-```bash
+# Start Development Server
 npm run dev
+
+# To see the catalog interface, visit:
+http://localhost:5173
 ```
-
-Visit `http://localhost:5173` to see the catalog interface.
-
-A web-based catalog interface for the EDEN Registry of Long-Term Preservation Services, demonstrating dynamic querying and filtering of RDF/DCAT-AP metadata via SPARQL.
 
 ## Overview
+
+A web-based catalog interface for the EDEN Registry of Long-Term Preservation Services, demonstrating dynamic querying and filtering of RDF/DCAT-AP metadata via SPARQL.
 
 This proof of concept demonstrates a modern approach to building a registry catalog interface that:
 
@@ -231,14 +235,14 @@ src/
 │   ├── +page.svelte        # Main catalog page
 │   └── +page.server.ts     # Server load function
 └── static/
-    └── registry-data.ttl   # Sample RDF data
+    └── robots.txt
 ```
 
-## Extending the PoC
+## Extending the Registry
 
 ### Adding New Data
 
-Add new services or properties to `static/registry-data.ttl`:
+Add new services or properties to `../registry-data.ttl`:
 
 ```turtle
 <https://example.com/my-service>
@@ -246,6 +250,8 @@ Add new services or properties to `static/registry-data.ttl`:
     dct:title "My New Service"@en ;
     myprefix:customProperty "Custom Value" .
 ```
+
+Ensure your command-line prompt is in `registry-frontend/` directory. 
 
 Reload data: `./load-fuseki-data.sh`
 

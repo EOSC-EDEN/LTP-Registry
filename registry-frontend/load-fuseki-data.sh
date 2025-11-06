@@ -3,7 +3,7 @@
 # Run this from the catalog-mock directory with Fuseki running
 #
 # Usage: ./load-fuseki-data.sh [file1.ttl] [file2.ttl] ...
-# Default: loads static/registry-data.ttl
+# Default: loads ../registry-data.ttl
 
 set -e
 
@@ -13,7 +13,7 @@ FUSEKI_URL="http://localhost:3030"
 
 # If no files specified, use default
 if [ $# -eq 0 ]; then
-    FILES="static/registry-data.ttl"
+    FILES="../registry-data.ttl"
 else
     FILES="$@"
 fi

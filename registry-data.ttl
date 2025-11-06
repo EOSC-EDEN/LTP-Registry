@@ -74,3 +74,31 @@ PREFIX geon: <http://www.geonames.org/ontology#>
 # http://www.w3.org/ns/dcat#landingPage
 # http://data.europa.eu/r5r/applicableLegislation # The legislation that mandates the creation or management of the Data Service. 
 # http://purl.org/dc/terms/accessRights # Information regarding access or restrictions based on privacy, security, or other policies. 
+
+# --- CSC (FINLAND) ENTRIES ---
+
+# 1. ORGANIZATION (Publisher)
+<https://eden-fidelis.eu/example/registry/org_2>
+    rdf:type           org:Organization ;
+    foaf:name          "CSC – IT Center for Science Ltd."@en ;
+    org:identifier     <https://ror.org/04m8m1253> ;
+    vcard:country-name "Finland"@en .
+
+# 2. CONTACT POINT
+<https://eden-fidelis.eu/example/registry/contact_2>
+    rdf:type     vcard:Kind ;
+    vcard:fn     "National Digital Preservation Services Support"@en ;
+    vcard:hasEmail <mailto:pas-support@csc.fi> ;
+    vcard:hasURL <https://digitalpreservation.fi/> .
+
+# 3. DATA SERVICE (Tool)
+<https://eden-fidelis.eu/example/registry/service_4>
+    rdf:type          dcat:DataService ;
+    rdfs:label        "File Validation Service (DPS-FI)"@en ;
+    dct:title         "File Validation Service for Finnish National Digital Preservation Services"@en ;
+    dct:description   """You can validate your files against the National Digital Preservation Services (DPS) in Finland using this online service. The service displays the validity and support in the DPS for the files being validated."""@en ;
+    dcat:endpointURL  <https://validation.digitalpreservation.fi/#/en> ;
+    dcat:landingPage  <https://digitalpreservation.fi/> ;
+    dct:publisher     <https://eden-fidelis.eu/example/registry/org_2> ;  # Link to the CSC organization
+    dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact_2> ; # Link to the CSC contact
+    foaf:page         <https://github.com/Digital-Preservation-Finland/file-scraper> . # Link to documentation/source code
