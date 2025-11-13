@@ -9,6 +9,7 @@ PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
 PREFIX org:   <http://www.w3.org/ns/org#>
 PREFIX geon:  <http://www.geonames.org/ontology#>
+PREFIX cpp:   <https://eden-fidelis.eu/schema/cpp#>
 
 # Query to fetch all properties of a DataService with their labels
 # Returns: service, prop (property URI), propLabel, val (value), valLabel
@@ -21,39 +22,39 @@ SELECT DISTINCT ?service ?prop ?propLabel ?val ?valLabel
 
     ?service ?prop ?val .
 
-    # Exclude rdf:type from results (we already know it's a DataService)
+    # Exclude rdf:type from results
     FILTER(?prop != rdf:type)
 
-    # Get property label with fallback
-    OPTIONAL {
-        ?prop rdfs:label ?propLabelRaw .
-    }
+    # Get property label with fallback formatting
+    OPTIONAL { ?prop rdfs:label ?propLabelRaw . }
     BIND(COALESCE(?propLabelRaw, REPLACE(STR(?prop), "^.*[/#]([^/#]+)$", "$1")) AS ?propLabelRaw2)
     BIND(REPLACE(?propLabelRaw2, "-", " ") AS ?propLabelNoHyphens)
     BIND(REPLACE(?propLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?propLabelSpaced)
     BIND(CONCAT(UCASE(SUBSTR(?propLabelSpaced, 1, 1)), SUBSTR(?propLabelSpaced, 2)) AS ?propLabel)
 
-    # Get value label with special handling for CPPs and other labeled resources
-    # Try to get rdfs:label and an optional dct:title
-    OPTIONAL {
-        ?val rdfs:label ?valLabelRaw .
-        OPTIONAL { ?val dct:title ?valTitleRaw . }
-    }
-    # If both exist (like for a CPP), combine them into a single descriptive label
-    BIND(IF(BOUND(?valTitleRaw), CONCAT(?valLabelRaw, ": ", ?valTitleRaw), ?valLabelRaw) AS ?combinedLabel)
+    # --- Value Label Generation ---
+    # Get all potential labels for the value
+    OPTIONAL { ?val rdfs:label ?valRdfsLabel . }
+    OPTIONAL { ?val dct:title ?valDctTitle . }
+    OPTIONAL { ?val foaf:name ?valFoafName . }
+    OPTIONAL { ?val vcard:fn ?valVcardFn . }
 
-    # Fallback to other known label properties for other resource types
-    OPTIONAL { ?val foaf:name ?valNameRaw . }
-    OPTIONAL { ?val vcard:fn ?valFnRaw . }
+    # Create the final valLabel with specific logic for CPPs
+    BIND(
+        COALESCE(
+            # IF the property is has_cpp AND we have a label and title, combine them.
+            IF(?prop = cpp:has_cpp && BOUND(?valRdfsLabel) && BOUND(?valDctTitle), 
+               CONCAT(?valRdfsLabel, ": ", ?valDctTitle), 
+               ?valRdfsLabel # Otherwise, just use the rdfs:label if it exists
+            ),
+            ?valFoafName,    # Fallback to foaf:name
+            ?valVcardFn,     # Fallback to vcard:fn
+            # Final fallback: format the URI itself or use the literal value
+            IF(isURI(?val), REPLACE(STR(?val), "^.*[/#]([^/#]+)$", "$1"), STR(?val))
+        ) 
+    AS ?valLabelFormatted)
+    
+    BIND(?valLabelFormatted AS ?valLabel)
 
-    # Use the first available label: our combined label, then foaf:name, then vcard:fn, or finally, extract from the URI
-    BIND(COALESCE(?combinedLabel, ?valNameRaw, ?valFnRaw,
-        IF(isURI(?val), REPLACE(STR(?val), "^.*[/#]([^/#]+)$", "$1"), STR(?val))
-    ) AS ?valLabelRaw2)
-
-    # Final formatting for the display label
-    BIND(REPLACE(?valLabelRaw2, "-", " ") AS ?valLabelNoHyphens)
-    BIND(REPLACE(?valLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?valLabelSpaced)
-    BIND(CONCAT(UCASE(SUBSTR(?valLabelSpaced, 1, 1)), SUBSTR(?valLabelSpaced, 2)) AS ?valLabel)
 }
 ORDER BY ?service ?propLabel
