@@ -43,10 +43,9 @@ SELECT
             ?prop rdfs:label ?propLabelRaw .
         }
 
-        # Try to get explicit rdfs:label for value if it's a resource
-        OPTIONAL {
-            ?val rdfs:label ?valLabelRaw .
-        }
+        # Try to get explicit rdfs:label OR foaf:name for value if it's a resource
+        OPTIONAL { ?val rdfs:label ?valLabelRaw . }
+        OPTIONAL { ?val foaf:name ?valNameRaw . }
 
         # For property: use rdfs:label if available, otherwise extract from URI
         BIND(COALESCE(?propLabelRaw, REPLACE(STR(?prop), "^.*[/#]([^/#]+)$", "$1")) AS ?propLabelRaw2)
@@ -55,10 +54,11 @@ SELECT
         BIND(REPLACE(?propLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?propLabelSpaced)
         BIND(CONCAT(UCASE(SUBSTR(?propLabelSpaced, 1, 1)), SUBSTR(?propLabelSpaced, 2)) AS ?propLabel)
 
-        # For value: use rdfs:label if available, otherwise extract from URI, or use literal value
-        BIND(COALESCE(?valLabelRaw,
+        # For value: use foaf:name, then rdfs:label, then extract from URI, or use literal value
+        BIND(COALESCE(?valNameRaw, ?valLabelRaw,
                       IF(isURI(?val), REPLACE(STR(?val), "^.*[/#]([^/#]+)$", "$1"), STR(?val)))
              AS ?valLabelRaw2)
+
         # Format: replace hyphens with spaces, capitalize first letter
         BIND(REPLACE(?valLabelRaw2, "-", " ") AS ?valLabelNoHyphens2)
         BIND(CONCAT(UCASE(SUBSTR(?valLabelNoHyphens2, 1, 1)), SUBSTR(?valLabelNoHyphens2, 2)) AS ?valLabel)
