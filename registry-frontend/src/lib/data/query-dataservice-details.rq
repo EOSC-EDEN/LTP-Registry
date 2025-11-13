@@ -20,7 +20,8 @@ SELECT DISTINCT ?service ?prop ?propLabel ?val ?valLabel
 
     # PLACEHOLDER: Dynamic filters will be injected here
 
-    ?service ?prop ?val .
+    # Use a temporary variable for the object of the triple
+    ?service ?prop ?objectVal .
 
     # Exclude rdf:type from results
     FILTER(?prop != rdf:type)
@@ -32,12 +33,18 @@ SELECT DISTINCT ?service ?prop ?propLabel ?val ?valLabel
     BIND(REPLACE(?propLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?propLabelSpaced)
     BIND(CONCAT(UCASE(SUBSTR(?propLabelSpaced, 1, 1)), SUBSTR(?propLabelSpaced, 2)) AS ?propLabel)
 
-    # --- Value Label Generation ---
-    # Get all potential labels for the value
-    OPTIONAL { ?val rdfs:label ?valRdfsLabel . }
-    OPTIONAL { ?val dct:title ?valDctTitle . }
-    OPTIONAL { ?val foaf:name ?valFoafName . }
-    OPTIONAL { ?val vcard:fn ?valVcardFn . }
+    # Get the actual document URL if it exists
+    OPTIONAL { ?objectVal foaf:page ?pageUrl . }
+
+    # Conditionally define the final link URL (`?val`)
+    # For CPPs, use the pageUrl. For everything else, use the object's URI.
+    BIND(IF(?prop = cpp:has_cpp, ?pageUrl, ?objectVal) AS ?val)
+
+    # Get all potential labels for the value, using the original objectVal
+    OPTIONAL { ?objectVal rdfs:label ?valRdfsLabel . }
+    OPTIONAL { ?objectVal dct:title ?valDctTitle . }
+    OPTIONAL { ?objectVal foaf:name ?valFoafName . }
+    OPTIONAL { ?objectVal vcard:fn ?valVcardFn . }
 
     # Create the final valLabel with specific logic for CPPs
     BIND(
@@ -50,11 +57,9 @@ SELECT DISTINCT ?service ?prop ?propLabel ?val ?valLabel
             ?valFoafName,    # Fallback to foaf:name
             ?valVcardFn,     # Fallback to vcard:fn
             # Final fallback: format the URI itself or use the literal value
-            IF(isURI(?val), REPLACE(STR(?val), "^.*[/#]([^/#]+)$", "$1"), STR(?val))
+            IF(isURI(?objectVal), REPLACE(STR(?objectVal), "^.*[/#]([^/#]+)$", "$1"), STR(?objectVal))
         ) 
-    AS ?valLabelFormatted)
-    
-    BIND(?valLabelFormatted AS ?valLabel)
+    AS ?valLabel)
 
 }
 ORDER BY ?service ?propLabel
