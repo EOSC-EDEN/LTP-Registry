@@ -30,7 +30,15 @@ SELECT DISTINCT ?service ?prop ?propLabel ?val ?valLabel
 
     # Get property label with fallback
     OPTIONAL { ?prop rdfs:label ?propLabelRaw . }
-    BIND(COALESCE(?propLabelRaw, REPLACE(STR(?prop), "^.*[/#]([^/#]+)$", "$1")) AS ?propLabelFormatted)
+
+    # Special case to provide a user-friendly label for the BFO property
+    BIND(
+        COALESCE(
+            IF(?prop = obo:BFO_0000067, "Contains process", ?propLabelRaw),
+            REPLACE(STR(?prop), "^.*[/#]([^/#]+)$", "$1")
+        )
+    AS ?propLabelFormatted)
+
     BIND(REPLACE(?propLabelFormatted, "-", " ") AS ?propLabelNoHyphens)
     BIND(REPLACE(?propLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?propLabelSpaced)
     BIND(CONCAT(UCASE(SUBSTR(?propLabelSpaced, 1, 1)), SUBSTR(?propLabelSpaced, 2)) AS ?propLabel)
