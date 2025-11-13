@@ -33,23 +33,25 @@ SELECT DISTINCT ?service ?prop ?propLabel ?val ?valLabel
     BIND(REPLACE(?propLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?propLabelSpaced)
     BIND(CONCAT(UCASE(SUBSTR(?propLabelSpaced, 1, 1)), SUBSTR(?propLabelSpaced, 2)) AS ?propLabel)
 
-    # Get value label with fallback
+    # Get value label with special handling for CPPs and other labeled resources
+    # Try to get rdfs:label and an optional dct:title
     OPTIONAL {
-        # Try to get label for the value if it's a resource
         ?val rdfs:label ?valLabelRaw .
+        OPTIONAL { ?val dct:title ?valTitleRaw . }
     }
-    OPTIONAL {
-        # Try foaf:name for organizations
-        ?val foaf:name ?valNameRaw .
-    }
-    OPTIONAL {
-        # Try vcard:fn for contacts
-        ?val vcard:fn ?valFnRaw .
-    }
-    # Use the first available label or extract from URI
-    BIND(COALESCE(?valLabelRaw, ?valNameRaw, ?valFnRaw,
+    # If both exist (like for a CPP), combine them into a single descriptive label
+    BIND(IF(BOUND(?valTitleRaw), CONCAT(?valLabelRaw, ": ", ?valTitleRaw), ?valLabelRaw) AS ?combinedLabel)
+
+    # Fallback to other known label properties for other resource types
+    OPTIONAL { ?val foaf:name ?valNameRaw . }
+    OPTIONAL { ?val vcard:fn ?valFnRaw . }
+
+    # Use the first available label: our combined label, then foaf:name, then vcard:fn, or finally, extract from the URI
+    BIND(COALESCE(?combinedLabel, ?valNameRaw, ?valFnRaw,
         IF(isURI(?val), REPLACE(STR(?val), "^.*[/#]([^/#]+)$", "$1"), STR(?val))
     ) AS ?valLabelRaw2)
+
+    # Final formatting for the display label
     BIND(REPLACE(?valLabelRaw2, "-", " ") AS ?valLabelNoHyphens)
     BIND(REPLACE(?valLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?valLabelSpaced)
     BIND(CONCAT(UCASE(SUBSTR(?valLabelSpaced, 1, 1)), SUBSTR(?valLabelSpaced, 2)) AS ?valLabel)
