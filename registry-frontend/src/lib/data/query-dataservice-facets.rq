@@ -43,9 +43,10 @@ SELECT
             ?prop rdfs:label ?propLabelRaw .
         }
 
-        # Try to get explicit rdfs:label OR foaf:name for value if it's a resource
+        # Try to get explicit rdfs:label, foaf:name, OR vcard:fn for the value
         OPTIONAL { ?val rdfs:label ?valLabelRaw . }
         OPTIONAL { ?val foaf:name ?valNameRaw . }
+        OPTIONAL { ?val vcard:fn ?valFnRaw . }
 
         # For property: use rdfs:label if available, otherwise extract from URI
         BIND(COALESCE(?propLabelRaw, REPLACE(STR(?prop), "^.*[/#]([^/#]+)$", "$1")) AS ?propLabelRaw2)
@@ -54,8 +55,8 @@ SELECT
         BIND(REPLACE(?propLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?propLabelSpaced)
         BIND(CONCAT(UCASE(SUBSTR(?propLabelSpaced, 1, 1)), SUBSTR(?propLabelSpaced, 2)) AS ?propLabel)
 
-        # For value: use foaf:name, then rdfs:label, then extract from URI, or use literal value
-        BIND(COALESCE(?valNameRaw, ?valLabelRaw,
+        # For value: use foaf:name, vcard:fn, then rdfs:label, then fallback to URI/literal
+        BIND(COALESCE(?valNameRaw, ?valFnRaw, ?valLabelRaw,
                       IF(isURI(?val), REPLACE(STR(?val), "^.*[/#]([^/#]+)$", "$1"), STR(?val)))
              AS ?valLabelRaw2)
 
