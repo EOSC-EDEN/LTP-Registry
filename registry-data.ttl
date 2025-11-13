@@ -30,7 +30,7 @@ PREFIX sio:   <http://semanticscience.org/resource/>
     rdf:type       dcat:DataService ;
     rdfs:label     "DANS Data Station Social Sciences and Humanities"@en ;
     dct:title      "DANS Data Station Social Sciences and Humanities"@en ; # mandatory
-    dcat:endpointURL  <https://ssh.datastations.nl/api/> ;
+    dcat:endpointURL  <https://ssh.datastations.nl/api/> ; # mandatory
     dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact_1> ;
     # dcat:endpointDescription ""; # recommended
     dct:description "This data station allows you to deposit and search for data within the social sciences and humanities. The metadata of our Data Station SSH is also available in the national ODISSEI portal and the European CESSDA Data Catalogue."@en ; # recommended

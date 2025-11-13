@@ -29,7 +29,7 @@ SELECT
         ?service a dcat:DataService;
                 ?prop ?val .
 
-        # This filter excludes the CPP property, which is handled in a separate block
+        # Filter out content properties - only keep filter-worthy properties
         FILTER(
             ?prop != rdf:type &&
             ?prop != rdfs:label &&
@@ -45,15 +45,19 @@ SELECT
         OPTIONAL { ?val foaf:name ?valNameRaw . }
         OPTIONAL { ?val vcard:fn ?valFnRaw . }
 
+        # For property: use rdfs:label if available, otherwise extract from URI
         BIND(COALESCE(?propLabelRaw, REPLACE(STR(?prop), "^.*[/#]([^/#]+)$", "$1")) AS ?propLabelRaw2)
+        # Format: replace hyphens with spaces, add space before capitals, capitalize first letter
         BIND(REPLACE(?propLabelRaw2, "-", " ") AS ?propLabelNoHyphens)
         BIND(REPLACE(?propLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?propLabelSpaced)
         BIND(CONCAT(UCASE(SUBSTR(?propLabelSpaced, 1, 1)), SUBSTR(?propLabelSpaced, 2)) AS ?propLabel)
 
+        # For value: use foaf:name, vcard:fn, then rdfs:label, then fallback to URI/literal
         BIND(COALESCE(?valNameRaw, ?valFnRaw, ?valLabelRaw,
                       IF(isURI(?val), REPLACE(STR(?val), "^.*[/#]([^/#]+)$", "$1"), STR(?val)))
              AS ?valLabelRaw2)
 
+        # Format: replace hyphens with spaces, capitalize first letter
         BIND(REPLACE(?valLabelRaw2, "-", " ") AS ?valLabelNoHyphens2)
         BIND(CONCAT(UCASE(SUBSTR(?valLabelNoHyphens2, 1, 1)), SUBSTR(?valLabelNoHyphens2, 2)) AS ?valLabel)
     }
@@ -64,6 +68,8 @@ SELECT
                 ?linkProp ?org .
         ?org a org:Organization;
              foaf:name ?orgName .
+
+        # Only include organization links (publisher, creator, etc.)
         FILTER(?linkProp IN (dct:publisher, dct:creator, dct:rightsHolder))
 
         BIND(<http://purl.org/dc/terms/publisher> AS ?prop)
