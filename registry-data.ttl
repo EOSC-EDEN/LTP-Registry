@@ -74,7 +74,7 @@ PREFIX cpp-doc: <https://eden-fidelis.eu/example/cpp/>
     dct:publisher     <https://eden-fidelis.eu/example/registry/org_2> ;  # Link to the CSC organization
     dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact_2> ; # Link to the CSC contact
     foaf:page         <https://github.com/Digital-Preservation-Finland/file-scraper> ; # Link to documentation/source code
-    cpp:has_cpp       cpp-doc:001, cpp-doc:002 . # Link to CPPs
+    cpp:has_cpp       cpp-doc:010 . # Link to CPPs
 
 # --- DANS ENTRIES ---
 

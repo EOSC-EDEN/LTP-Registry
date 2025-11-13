@@ -167,4 +167,7 @@ curl -X POST -u admin:admin123 \
 
 # You should see:
 # Update succeeded
+
+# Then, reload the data
+./load-fuseki-data.sh
 ```
