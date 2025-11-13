@@ -9,7 +9,7 @@ PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
 PREFIX org:   <http://www.w3.org/ns/org#>
 PREFIX geon:  <http://www.geonames.org/ontology#>
-PREFIX cpp:   <https://eden-fidelis.eu/schema/cpp#>
+PREFIX obo:   <http://purl.obolibrary.org/obo/>
 
 # Query to fetch all properties of a DataService with their labels
 # Returns: service, prop (property URI), propLabel, val (value), valLabel
@@ -19,44 +19,40 @@ SELECT DISTINCT ?service ?prop ?propLabel ?val ?valLabel
     ?service a dcat:DataService .
 
     # PLACEHOLDER: Dynamic filters will be injected here
+    
+    # Fetching the properties of the filtered services
+    ?service ?prop ?objectVal . 
 
-    # Use a temporary variable for the object of the triple
-    ?service ?prop ?objectVal .
-
-    # Exclude rdf:type from results
     FILTER(?prop != rdf:type)
 
-    # Get property label with fallback formatting
+    # --- Property Label Generation ---
     OPTIONAL { ?prop rdfs:label ?propLabelRaw . }
-    BIND(COALESCE(?propLabelRaw, REPLACE(STR(?prop), "^.*[/#]([^/#]+)$", "$1")) AS ?propLabelRaw2)
-    BIND(REPLACE(?propLabelRaw2, "-", " ") AS ?propLabelNoHyphens)
+    BIND(COALESCE(?propLabelRaw, REPLACE(STR(?prop), "^.*[/#]([^/#]+)$", "$1")) AS ?propLabelFormatted)
+    BIND(REPLACE(?propLabelFormatted, "-", " ") AS ?propLabelNoHyphens)
     BIND(REPLACE(?propLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?propLabelSpaced)
     BIND(CONCAT(UCASE(SUBSTR(?propLabelSpaced, 1, 1)), SUBSTR(?propLabelSpaced, 2)) AS ?propLabel)
 
-    # Get the actual document URL if it exists
-    OPTIONAL { ?objectVal foaf:page ?pageUrl . }
-
-    # Conditionally define the final link URL (`?val`)
-    # For CPPs, use the pageUrl. For everything else, use the object's URI.
-    BIND(IF(?prop = cpp:has_cpp, ?pageUrl, ?objectVal) AS ?val)
-
-    # Get all potential labels for the value, using the original objectVal
+    # --- Value and Link Generation ---
     OPTIONAL { ?objectVal rdfs:label ?valRdfsLabel . }
     OPTIONAL { ?objectVal dct:title ?valDctTitle . }
     OPTIONAL { ?objectVal foaf:name ?valFoafName . }
     OPTIONAL { ?objectVal vcard:fn ?valVcardFn . }
+    OPTIONAL { ?objectVal foaf:page ?pageUrl . }
 
-    # Create the final valLabel with specific logic for CPPs
+    # For CPPs, the link (`?val`) is the Zenodo URL; for everything else, it's the object's URI.
+    BIND(
+        IF(?prop = obo:BFO_0000067, ?pageUrl, ?objectVal) 
+    AS ?val)
+
+    # For CPPs, the display text (`?valLabel`) is combined; for others, it's the standard label.
     BIND(
         COALESCE(
-            # IF the property is has_cpp AND we have a label and title, combine them.
-            IF(?prop = cpp:has_cpp && BOUND(?valRdfsLabel) && BOUND(?valDctTitle), 
+            IF(?prop = obo:BFO_0000067 && BOUND(?valRdfsLabel) && BOUND(?valDctTitle), 
                CONCAT(?valRdfsLabel, ": ", ?valDctTitle), 
-               ?valRdfsLabel # Otherwise, just use the rdfs:label if it exists
+               ?valRdfsLabel
             ),
-            ?valFoafName,    # Fallback to foaf:name
-            ?valVcardFn,     # Fallback to vcard:fn
-            # Final fallback: format the URI itself or use the literal value
+            ?valFoafName,
+            ?valVcardFn,
             IF(isURI(?objectVal), REPLACE(STR(?objectVal), "^.*[/#]([^/#]+)$", "$1"), STR(?objectVal))
         ) 
     AS ?valLabel)

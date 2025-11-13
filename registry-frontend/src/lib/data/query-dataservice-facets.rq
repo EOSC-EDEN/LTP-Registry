@@ -9,6 +9,7 @@ PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
 PREFIX org:   <http://www.w3.org/ns/org#>
 PREFIX geon:  <http://www.geonames.org/ontology#>
+PREFIX obo:   <http://purl.obolibrary.org/obo/>
 
 # Query to get all filterable facets for DataServices
 # This includes:
@@ -24,55 +25,45 @@ SELECT
     (COUNT(DISTINCT ?service) as ?count)
 {
     {
-        # Direct DataService properties
+        # Block 1: Generic properties
         ?service a dcat:DataService;
                 ?prop ?val .
 
-        # Filter out content properties - only keep filter-worthy properties
+        # This filter excludes the CPP property, which is handled in a separate block
         FILTER(
             ?prop != rdf:type &&
             ?prop != rdfs:label &&
             ?prop != dct:title &&
             ?prop != dct:description &&
             ?prop != dcat:endpointURL &&
-            ?prop != dcat:landingPage
+            ?prop != dcat:landingPage &&
+            ?prop != obo:BFO_0000067 
         )
 
-        # Try to get explicit rdfs:label for property
-        OPTIONAL {
-            ?prop rdfs:label ?propLabelRaw .
-        }
-
-        # Try to get explicit rdfs:label, foaf:name, OR vcard:fn for the value
+        OPTIONAL { ?prop rdfs:label ?propLabelRaw . }
         OPTIONAL { ?val rdfs:label ?valLabelRaw . }
         OPTIONAL { ?val foaf:name ?valNameRaw . }
         OPTIONAL { ?val vcard:fn ?valFnRaw . }
 
-        # For property: use rdfs:label if available, otherwise extract from URI
         BIND(COALESCE(?propLabelRaw, REPLACE(STR(?prop), "^.*[/#]([^/#]+)$", "$1")) AS ?propLabelRaw2)
-        # Format: replace hyphens with spaces, add space before capitals, capitalize first letter
         BIND(REPLACE(?propLabelRaw2, "-", " ") AS ?propLabelNoHyphens)
         BIND(REPLACE(?propLabelNoHyphens, "([a-z])([A-Z])", "$1 $2") AS ?propLabelSpaced)
         BIND(CONCAT(UCASE(SUBSTR(?propLabelSpaced, 1, 1)), SUBSTR(?propLabelSpaced, 2)) AS ?propLabel)
 
-        # For value: use foaf:name, vcard:fn, then rdfs:label, then fallback to URI/literal
         BIND(COALESCE(?valNameRaw, ?valFnRaw, ?valLabelRaw,
                       IF(isURI(?val), REPLACE(STR(?val), "^.*[/#]([^/#]+)$", "$1"), STR(?val)))
              AS ?valLabelRaw2)
 
-        # Format: replace hyphens with spaces, capitalize first letter
         BIND(REPLACE(?valLabelRaw2, "-", " ") AS ?valLabelNoHyphens2)
         BIND(CONCAT(UCASE(SUBSTR(?valLabelNoHyphens2, 1, 1)), SUBSTR(?valLabelNoHyphens2, 2)) AS ?valLabel)
     }
     UNION
     {
-        # Organizations as filter facet (via publisher, creator, etc.)
+        # Block 2: Publisher
         ?service a dcat:DataService;
                 ?linkProp ?org .
         ?org a org:Organization;
              foaf:name ?orgName .
-
-        # Only include organization links (publisher, creator, etc.)
         FILTER(?linkProp IN (dct:publisher, dct:creator, dct:rightsHolder))
 
         BIND(<http://purl.org/dc/terms/publisher> AS ?prop)
@@ -82,7 +73,7 @@ SELECT
     }
     UNION
     {
-        # Contact Points as filter facet
+        # Block 3: Contact Points
         ?service a dcat:DataService;
                 dcat:contactPoint ?contact .
         ?contact a vcard:Kind;
@@ -92,6 +83,20 @@ SELECT
         BIND("Contact Point" AS ?propLabel)
         BIND(?contact AS ?val)
         BIND(?contactName AS ?valLabel)
+    }
+    UNION
+    {
+        # Block 4: New block to specifically handle and format CPPs
+        ?service a dcat:DataService ;
+                 obo:BFO_0000067 ?cpp .
+        
+        ?cpp rdfs:label ?cppLabel ;
+             dct:title ?cppTitle .
+        
+        BIND(obo:BFO_0000067 AS ?prop)
+        BIND("Contains process" AS ?propLabel)
+        BIND(?cpp AS ?val)
+        BIND(CONCAT(?cppLabel, ": ", ?cppTitle) AS ?valLabel)
     }
 }
 GROUP BY ?prop ?propLabel ?val ?valLabel
