@@ -9,6 +9,8 @@ PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
 PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
 PREFIX geon: <http://www.geonames.org/ontology#>
+PREFIX cpp:   <https://eden-fidelis.eu/schema/cpp#>
+PREFIX cpp-doc: <https://eden-fidelis.eu/example/cpp/>
 
 
 <https://eden-fidelis.eu/example/registry/service_1>
@@ -45,36 +47,6 @@ PREFIX geon: <http://www.geonames.org/ontology#>
     dct:publisher <https://eden-fidelis.eu/example/registry/org_1> ;
     foaf:page <https://dans-knaw.github.io/dd-dans-sword2-examples/>.  
 
-
-
-
-
-# documentation: https://support.datastations.nl/en/support/solutions/folders/80000692438
-
-<https://eden-fidelis.eu/example/registry/org_1>
-    rdf:type org:Organization ;
-    foaf:name "Data Archiving Networked Services (DANS)"@en ;
-    org:identifier <https://ror.org/008pnp284> ;
-    vcard:country-name "The Netherlands"@en ;
-    geon:geonamesID <https://www.geonames.org/2747373> ;
-    .
-
-<https://eden-fidelis.eu/example/registry/contact_1>
-        rdf:type  vcard:Kind ;
-        vcard:fn  "Data Archiving Networked Services (DANS)"@en ;
-        vcard:hasEmail <mailto:info@dans.knaw.nl> ; 
-        vcard:hasURL <https://dans.knaw.nl/>  .
-
-
-
-
-# http://www.w3.org/ns/dcat#keyword
-# http://purl.org/dc/terms/conformsTo # An established (technical) standard to which the Data Service conforms. 
-
-# http://www.w3.org/ns/dcat#landingPage
-# http://data.europa.eu/r5r/applicableLegislation # The legislation that mandates the creation or management of the Data Service. 
-# http://purl.org/dc/terms/accessRights # Information regarding access or restrictions based on privacy, security, or other policies. 
-
 # --- CSC (FINLAND) ENTRIES ---
 
 # 1. ORGANIZATION (Publisher)
@@ -91,7 +63,7 @@ PREFIX geon: <http://www.geonames.org/ontology#>
     vcard:hasEmail <mailto:pas-support@csc.fi> ;
     vcard:hasURL <https://digitalpreservation.fi/> .
 
-# 3. DATA SERVICE (Tool)
+# 3. DATA SERVICE (Tool) with CPP links
 <https://eden-fidelis.eu/example/registry/service_4>
     rdf:type          dcat:DataService ;
     rdfs:label        "File Validation Service (DPS-FI)"@en ;
@@ -101,4 +73,60 @@ PREFIX geon: <http://www.geonames.org/ontology#>
     dcat:landingPage  <https://digitalpreservation.fi/> ;
     dct:publisher     <https://eden-fidelis.eu/example/registry/org_2> ;  # Link to the CSC organization
     dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact_2> ; # Link to the CSC contact
-    foaf:page         <https://github.com/Digital-Preservation-Finland/file-scraper> . # Link to documentation/source code
+    foaf:page         <https://github.com/Digital-Preservation-Finland/file-scraper> ; # Link to documentation/source code
+    cpp:has_cpp       cpp-doc:001, cpp-doc:002 . # Link to CPPs
+
+# --- DANS ENTRIES ---
+
+<https://eden-fidelis.eu/example/registry/org_1>
+    rdf:type org:Organization ;
+    foaf:name "Data Archiving Networked Services (DANS)"@en ;
+    org:identifier <https://ror.org/008pnp284> ;
+    vcard:country-name "The Netherlands"@en ;
+    geon:geonamesID <https://www.geonames.org/2747373> .
+
+<https://eden-fidelis.eu/example/registry/contact_1>
+        rdf:type  vcard:Kind ;
+        vcard:fn  "Data Archiving Networked Services (DANS)"@en ;
+        vcard:hasEmail <mailto:info@dans.knaw.nl> ; 
+        vcard:hasURL <https://dans.knaw.nl/> .
+
+
+# --- CPP SCHEMA and DATA ---
+
+# 1. PROPERTY DEFINITION
+cpp:has_cpp
+    a rdf:Property ;
+    rdfs:label "EOSC EDEN CPP Reference"@en .
+
+# 2. CPP DOCUMENT DEFINITIONS
+cpp-doc:001 a foaf:Document ; rdfs:label "CPP-001"@en ; foaf:page <https://example.com/cpp/001> .
+cpp-doc:002 a foaf:Document ; rdfs:label "CPP-002"@en ; foaf:page <https://example.com/cpp/002> .
+cpp-doc:003 a foaf:Document ; rdfs:label "CPP-003"@en ; foaf:page <https://example.com/cpp/003> .
+cpp-doc:004 a foaf:Document ; rdfs:label "CPP-004"@en ; foaf:page <https://example.com/cpp/004> .
+cpp-doc:005 a foaf:Document ; rdfs:label "CPP-005"@en ; foaf:page <https://example.com/cpp/005> .
+cpp-doc:006 a foaf:Document ; rdfs:label "CPP-006"@en ; foaf:page <https://example.com/cpp/006> .
+cpp-doc:007 a foaf:Document ; rdfs:label "CPP-007"@en ; foaf:page <https://example.com/cpp/007> .
+cpp-doc:008 a foaf:Document ; rdfs:label "CPP-008"@en ; foaf:page <https://example.com/cpp/008> .
+cpp-doc:009 a foaf:Document ; rdfs:label "CPP-009"@en ; foaf:page <https://example.com/cpp/009> .
+cpp-doc:010 a foaf:Document ; rdfs:label "CPP-010"@en ; foaf:page <https://example.com/cpp/010> .
+cpp-doc:011 a foaf:Document ; rdfs:label "CPP-011"@en ; foaf:page <https://example.com/cpp/011> .
+cpp-doc:012 a foaf:Document ; rdfs:label "CPP-012"@en ; foaf:page <https://example.com/cpp/012> .
+cpp-doc:013 a foaf:Document ; rdfs:label "CPP-013"@en ; foaf:page <https://example.com/cpp/013> .
+cpp-doc:014 a foaf:Document ; rdfs:label "CPP-014"@en ; foaf:page <https://example.com/cpp/014> .
+cpp-doc:015 a foaf:Document ; rdfs:label "CPP-015"@en ; foaf:page <https://example.com/cpp/015> .
+cpp-doc:016 a foaf:Document ; rdfs:label "CPP-016"@en ; foaf:page <https://example.com/cpp/016> .
+cpp-doc:017 a foaf:Document ; rdfs:label "CPP-017"@en ; foaf:page <https://example.com/cpp/017> .
+cpp-doc:018 a foaf:Document ; rdfs:label "CPP-018"@en ; foaf:page <https://example.com/cpp/018> .
+cpp-doc:019 a foaf:Document ; rdfs:label "CPP-019"@en ; foaf:page <https://example.com/cpp/019> .
+cpp-doc:020 a foaf:Document ; rdfs:label "CPP-020"@en ; foaf:page <https://example.com/cpp/020> .
+cpp-doc:021 a foaf:Document ; rdfs:label "CPP-021"@en ; foaf:page <https://example.com/cpp/021> .
+cpp-doc:022 a foaf:Document ; rdfs:label "CPP-022"@en ; foaf:page <https://example.com/cpp/022> .
+cpp-doc:023 a foaf:Document ; rdfs:label "CPP-023"@en ; foaf:page <https://example.com/cpp/023> .
+cpp-doc:024 a foaf:Document ; rdfs:label "CPP-024"@en ; foaf:page <https://example.com/cpp/024> .
+cpp-doc:025 a foaf:Document ; rdfs:label "CPP-025"@en ; foaf:page <https://example.com/cpp/025> .
+cpp-doc:026 a foaf:Document ; rdfs:label "CPP-026"@en ; foaf:page <https://example.com/cpp/026> .
+cpp-doc:027 a foaf:Document ; rdfs:label "CPP-027"@en ; foaf:page <https://example.com/cpp/027> .
+cpp-doc:028 a foaf:Document ; rdfs:label "CPP-028"@en ; foaf:page <https://example.com/cpp/028> .
+cpp-doc:029 a foaf:Document ; rdfs:label "CPP-029"@en ; foaf:page <https://example.com/cpp/029> .
+cpp-doc:030 a foaf:Document ; rdfs:label "CPP-030"@en ; foaf:page <https://example.com/cpp/030> .
