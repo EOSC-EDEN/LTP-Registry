@@ -155,3 +155,19 @@ Change the port mapping in `docker compose.yml`:
 ports:
   - '8080:3030' # Access at http://localhost:8080
 ```
+
+### Clear existing fuseki triplestore
+
+* This can be useful if you want to completely reload the data
+
+```bash
+curl -X POST -u admin:admin123 \
+--data-urlencode "update=CLEAR DEFAULT" \
+"http://localhost:3030/registry/update"
+
+# You should see:
+# Update succeeded
+
+# Then, reload the data
+./load-fuseki-data.sh
+```

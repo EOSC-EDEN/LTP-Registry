@@ -36,7 +36,18 @@
 	<div class="border-t border-gray-100">
 		<dl class="divide-y divide-gray-100">
 			{#each properties as property (property.propUri)}
-				{#if property.propLabel.toLowerCase() === 'title' || property.propLabel.toLowerCase() === 'description'}{:else if property.values.length === 1}
+				{#if property.propLabel.toLowerCase() === 'title' || property.propLabel.toLowerCase() === 'description'}
+                    <!-- Hide title and description from property list -->
+                {:else if property.propLabel.toLowerCase() === 'has cpp'}
+                    <!-- Custom rendering for CPP property -->
+                    <PropertyList
+                        label="+ CPP"
+                        values={property.values.map((v) => v.val)}
+                        displayLabels={property.values.map((v) => `[${v.valLabel}]`)}
+                        isUri={true}
+                        asBadges={false}
+                    />
+				{:else if property.values.length === 1}
 					<PropertyRow
 						label={property.propLabel}
 						value={isUri(property.values[0].val)

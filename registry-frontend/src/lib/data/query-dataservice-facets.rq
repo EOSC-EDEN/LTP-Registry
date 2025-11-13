@@ -9,6 +9,7 @@ PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
 PREFIX org:   <http://www.w3.org/ns/org#>
 PREFIX geon:  <http://www.geonames.org/ontology#>
+PREFIX obo:   <http://purl.obolibrary.org/obo/>
 
 # Query to get all filterable facets for DataServices
 # This includes:
@@ -24,7 +25,7 @@ SELECT
     (COUNT(DISTINCT ?service) as ?count)
 {
     {
-        # Direct DataService properties
+        # Block 1: Generic properties
         ?service a dcat:DataService;
                 ?prop ?val .
 
@@ -35,13 +36,12 @@ SELECT
             ?prop != dct:title &&
             ?prop != dct:description &&
             ?prop != dcat:endpointURL &&
-            ?prop != dcat:landingPage
+            ?prop != dcat:landingPage &&
+            ?prop != obo:BFO_0000067 
         )
 
         # Try to get explicit rdfs:label for property
-        OPTIONAL {
-            ?prop rdfs:label ?propLabelRaw .
-        }
+        OPTIONAL { ?prop rdfs:label ?propLabelRaw . }
 
         # Try to get explicit rdfs:label, foaf:name, OR vcard:fn for the value
         OPTIONAL { ?val rdfs:label ?valLabelRaw . }
@@ -66,7 +66,7 @@ SELECT
     }
     UNION
     {
-        # Organizations as filter facet (via publisher, creator, etc.)
+        # Block 2: Publisher
         ?service a dcat:DataService;
                 ?linkProp ?org .
         ?org a org:Organization;
@@ -82,7 +82,7 @@ SELECT
     }
     UNION
     {
-        # Contact Points as filter facet
+        # Block 3: Contact Points
         ?service a dcat:DataService;
                 dcat:contactPoint ?contact .
         ?contact a vcard:Kind;
@@ -92,6 +92,20 @@ SELECT
         BIND("Contact Point" AS ?propLabel)
         BIND(?contact AS ?val)
         BIND(?contactName AS ?valLabel)
+    }
+    UNION
+    {
+        # Block 4: New block to specifically handle and format CPPs
+        ?service a dcat:DataService ;
+                 obo:BFO_0000067 ?cpp .
+        
+        ?cpp rdfs:label ?cppLabel ;
+             dct:title ?cppTitle .
+        
+        BIND(obo:BFO_0000067 AS ?prop)
+        BIND("Contains process" AS ?propLabel)
+        BIND(?cpp AS ?val)
+        BIND(CONCAT(?cppLabel, ": ", ?cppTitle) AS ?valLabel)
     }
 }
 GROUP BY ?prop ?propLabel ?val ?valLabel

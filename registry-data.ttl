@@ -9,6 +9,9 @@ PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
 PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX edenr: <https://eden-fidelis.eu/example/registry/>
 PREFIX geon: <http://www.geonames.org/ontology#>
+PREFIX cpp:   <https://eden-fidelis.eu/example/cpp/>
+PREFIX obo:   <http://purl.obolibrary.org/obo/>
+PREFIX sio:   <http://semanticscience.org/resource/>
 
 
 <https://eden-fidelis.eu/example/registry/service_1>
@@ -45,36 +48,6 @@ PREFIX geon: <http://www.geonames.org/ontology#>
     dct:publisher <https://eden-fidelis.eu/example/registry/org_1> ;
     foaf:page <https://dans-knaw.github.io/dd-dans-sword2-examples/>.  
 
-
-
-
-
-# documentation: https://support.datastations.nl/en/support/solutions/folders/80000692438
-
-<https://eden-fidelis.eu/example/registry/org_1>
-    rdf:type org:Organization ;
-    foaf:name "Data Archiving Networked Services (DANS)"@en ;
-    org:identifier <https://ror.org/008pnp284> ;
-    vcard:country-name "The Netherlands"@en ;
-    geon:geonamesID <https://www.geonames.org/2747373> ;
-    .
-
-<https://eden-fidelis.eu/example/registry/contact_1>
-        rdf:type  vcard:Kind ;
-        vcard:fn  "Data Archiving Networked Services (DANS)"@en ;
-        vcard:hasEmail <mailto:info@dans.knaw.nl> ; 
-        vcard:hasURL <https://dans.knaw.nl/>  .
-
-
-
-
-# http://www.w3.org/ns/dcat#keyword
-# http://purl.org/dc/terms/conformsTo # An established (technical) standard to which the Data Service conforms. 
-
-# http://www.w3.org/ns/dcat#landingPage
-# http://data.europa.eu/r5r/applicableLegislation # The legislation that mandates the creation or management of the Data Service. 
-# http://purl.org/dc/terms/accessRights # Information regarding access or restrictions based on privacy, security, or other policies. 
-
 # --- CSC (FINLAND) ENTRIES ---
 
 # 1. ORGANIZATION (Publisher)
@@ -91,7 +64,7 @@ PREFIX geon: <http://www.geonames.org/ontology#>
     vcard:hasEmail <mailto:pas-support@csc.fi> ;
     vcard:hasURL <https://digitalpreservation.fi/> .
 
-# 3. DATA SERVICE (Tool)
+# 3. DATA SERVICE (Tool) with CPP links
 <https://eden-fidelis.eu/example/registry/service_4>
     rdf:type          dcat:DataService ;
     rdfs:label        "File Validation Service (DPS-FI)"@en ;
@@ -99,6 +72,56 @@ PREFIX geon: <http://www.geonames.org/ontology#>
     dct:description   """You can validate your files against the National Digital Preservation Services (DPS) in Finland using this online service. The service displays the validity and support in the DPS for the files being validated."""@en ;
     dcat:endpointURL  <https://validation.digitalpreservation.fi/#/en> ;
     dcat:landingPage  <https://digitalpreservation.fi/> ;
-    dct:publisher     <https://eden-fidelis.eu/example/registry/org_2> ;  # Link to the CSC organization
+    dct:publisher     <https://eden-fidelis.eu/example/registry/org_2> ; # Link to the CSC organization
     dcat:contactPoint <https://eden-fidelis.eu/example/registry/contact_2> ; # Link to the CSC contact
-    foaf:page         <https://github.com/Digital-Preservation-Finland/file-scraper> . # Link to documentation/source code
+    foaf:page         <https://github.com/Digital-Preservation-Finland/file-scraper> ; # Link to documentation/source code
+    obo:BFO_0000067   cpp:010 . # Link to CPP using "contains process" property
+
+# --- DANS ENTRIES ---
+
+<https://eden-fidelis.eu/example/registry/org_1>
+    rdf:type org:Organization ;
+    foaf:name "Data Archiving Networked Services (DANS)"@en ;
+    org:identifier <https://ror.org/008pnp284> ;
+    vcard:country-name "The Netherlands"@en ;
+    geon:geonamesID <https://www.geonames.org/2747373> .
+
+<https://eden-fidelis.eu/example/registry/contact_1>
+        rdf:type  vcard:Kind ;
+        vcard:fn  "Data Archiving Networked Services (DANS)"@en ;
+        vcard:hasEmail <mailto:info@dans.knaw.nl> ; 
+        vcard:hasURL <https://dans.knaw.nl/> .
+
+
+# --- CPP DEFINITIONS (as Processes) ---
+
+cpp:001 a sio:SIO_000006 ; rdfs:label "CPP-001"@en ; dct:title "Checksum Generation and Recording"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-001_Checksum_Generation_and_Recording.pdf> .
+cpp:002 a sio:SIO_000006 ; rdfs:label "CPP-002"@en ; dct:title "Checksum Validation"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-002_Checksum_Validation.pdf> .
+cpp:003 a sio:SIO_000006 ; rdfs:label "CPP-003"@en ; dct:title "Integrity Checking"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-003_Integrity_Checking.pdf> .
+cpp:004 a sio:SIO_000006 ; rdfs:label "CPP-004"@en ; dct:title "Data Corruption Management"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-004_Data_Corruption_Management.pdf> .
+cpp:005 a sio:SIO_000006 ; rdfs:label "CPP-005"@en ; dct:title "Identifier Management"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-005_Identifier_Management.pdf> .
+cpp:006 a sio:SIO_000006 ; rdfs:label "CPP-006"@en ; dct:title "AIP Batch Export"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-006_AIP_Batch_Export.pdf> .
+cpp:007 a sio:SIO_000006 ; rdfs:label "CPP-007"@en ; dct:title "Virus Scanning"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-007_Virus_Scanning.pdf> .
+cpp:008 a sio:SIO_000006 ; rdfs:label "CPP-008"@en ; dct:title "File Format Identification"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-008_File_Format_Identification.pdf> .
+cpp:009 a sio:SIO_000006 ; rdfs:label "CPP-009"@en ; dct:title "Metadata Extraction"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-009_Metadata_Extraction.pdf> .
+cpp:010 a sio:SIO_000006 ; rdfs:label "CPP-010"@en ; dct:title "File Format Validation"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-010_File_Format_Validation.pdf> .
+cpp:011 a sio:SIO_000006 ; rdfs:label "CPP-011"@en ; dct:title "Replication"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-011_Replication.pdf> .
+cpp:012 a sio:SIO_000006 ; rdfs:label "CPP-012"@en ; dct:title "Risk Mitigation"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-012_Risk_Mitigation.pdf> .
+cpp:013 a sio:SIO_000006 ; rdfs:label "CPP-013"@en ; dct:title "Object Management Reporting"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-013_Object_Management_Reporting.pdf> .
+cpp:014 a sio:SIO_000006 ; rdfs:label "CPP-014"@en ; dct:title "File Migration"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-014_File_Migration.pdf> .
+cpp:015 a sio:SIO_000006 ; rdfs:label "CPP-015"@en ; dct:title "Emulation and Rendering Tools"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-015_Emulation_and_Rendering_Tools.pdf> .
+cpp:016 a sio:SIO_000006 ; rdfs:label "CPP-016"@en ; dct:title "Metadata Ingest and Management"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-016_Metadata_Ingest_and_Management.pdf> .
+cpp:017 a sio:SIO_000006 ; rdfs:label "CPP-017"@en ; dct:title "Disposal"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-017_Disposal.pdf> .
+cpp:018 a sio:SIO_000006 ; rdfs:label "CPP-018"@en ; dct:title "Community Watch"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-018_Community_Watch.pdf> .
+cpp:019 a sio:SIO_000006 ; rdfs:label "CPP-019"@en ; dct:title "Data Quality Assessment"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-019_Data_Quality_Assessment.pdf> .
+cpp:020 a sio:SIO_000006 ; rdfs:label "CPP-020"@en ; dct:title "Rights Management"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-020_Rights_Management.pdf> .
+cpp:021 a sio:SIO_000006 ; rdfs:label "CPP-021"@en ; dct:title "AIP Versioning"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-021_AIP_Versioning.pdf> .
+cpp:022 a sio:SIO_000006 ; rdfs:label "CPP-022"@en ; dct:title "Significant Properties Definition"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-022_Significant_Properties_Definition.pdf> .
+cpp:023 a sio:SIO_000006 ; rdfs:label "CPP-023"@en ; dct:title "Risk Definition and Extraction"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-023_Risk_Definition_and_Extraction.pdf> .
+cpp:024 a sio:SIO_000006 ; rdfs:label "CPP-024"@en ; dct:title "Enabling Discovery"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-024_Enabling_Discovery.pdf> .
+cpp:025 a sio:SIO_000006 ; rdfs:label "CPP-025"@en ; dct:title "Enabling Access"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-025_Enabling_Access.pdf> .
+cpp:026 a sio:SIO_000006 ; rdfs:label "CPP-026"@en ; dct:title "File Normalisation"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-026_File_Normalisation.pdf> .
+cpp:027 a sio:SIO_000006 ; rdfs:label "CPP-027"@en ; dct:title "File Repair"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-027_File_Repair.pdf> .
+cpp:028 a sio:SIO_000006 ; rdfs:label "CPP-028"@en ; dct:title "Creation of Derivatives"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-028_Creation_of_Derivatives.pdf> .
+cpp:029 a sio:SIO_000006 ; rdfs:label "CPP-029"@en ; dct:title "Ingest"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-029_Ingest.pdf> .
+cpp:030 a sio:SIO_000006 ; rdfs:label "CPP-030"@en ; dct:title "Refreshment"@en ; foaf:page <https://zenodo.org/records/16992452/files/EOSC-EDEN_CPP-030_Refreshment.pdf> .
