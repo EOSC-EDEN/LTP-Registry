@@ -23,9 +23,12 @@ SELECT DISTINCT ?service ?prop ?propLabel ?val ?valLabel
     # Fetching the properties of the filtered services
     ?service ?prop ?objectVal . 
 
+    # Exclude rdf:type from results (we already know it's a DataService)
     FILTER(?prop != rdf:type)
 
     # --- Property Label Generation ---
+
+    # Get property label with fallback
     OPTIONAL { ?prop rdfs:label ?propLabelRaw . }
     BIND(COALESCE(?propLabelRaw, REPLACE(STR(?prop), "^.*[/#]([^/#]+)$", "$1")) AS ?propLabelFormatted)
     BIND(REPLACE(?propLabelFormatted, "-", " ") AS ?propLabelNoHyphens)
